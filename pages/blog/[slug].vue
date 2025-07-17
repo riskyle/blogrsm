@@ -75,4 +75,28 @@ onMounted(async () => {
   font-size: 0.9em;
   color: #666;
 }
+
+@media screen and (max-width: 900px) {
+  .blog-post {
+    padding-left: 45px;
+    padding-right: 10px;
+  }
+  .post-header {
+    margin-bottom: 20px;
+  }
+  .post-content {
+    padding-right: 10px;
+    padding-bottom: 10px;
+    white-space: wrap;
+  }
+  .post-header h1 {
+    font-size: 1.2em;
+  }
+  .post-content div {
+    font-size: 0.9em;
+  }
+  .post-content p {
+    font-size: 0.9em;
+  }
+}
 </style>

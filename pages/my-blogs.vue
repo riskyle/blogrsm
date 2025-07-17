@@ -44,7 +44,13 @@ onMounted(async () => {
 
 <style scoped>
 .blog-header {
-  margin-left: 50px;
-  margin-top: 40px;
+  margin-left: 40px;
+  margin-bottom: 0px;
+}
+
+@media (max-width: 600px) {
+  .blog-header {
+    font-size: 0.8em;
+  }
 }
 </style>

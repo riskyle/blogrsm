@@ -169,6 +169,16 @@ label {
   max-width: 1400px;
   margin: 0 auto;
   padding-bottom: 50px;
+  padding-left: 20px;
+}
+
+@media (max-width: 1100px) {
+  .profile {
+    padding: 0px 40px;
+  }
+  .form-input {
+    min-width: 250px;
+  }
 }
 
 .profile-container {
@@ -234,6 +244,16 @@ label {
 
 .email {
   color: #666;
+}
+
+@media (max-width: 600px) {
+  .profile-img {
+    width: 60px;
+  }
+
+  .name {
+    font-size: 1em;
+  }
 }
 
 .form-group {

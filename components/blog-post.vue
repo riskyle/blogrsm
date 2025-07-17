@@ -106,7 +106,13 @@ onUnmounted(() => {
                 <img src="../assets/icons/dots-horizontal-icon.svg" alt="" />
               </div>
               <div v-if="openDropdowns[index]" class="dropdown-content">
-                <a @click="navigateTo(`/blog/${blog.slug}`)">Read</a>
+                <a
+                  @click="
+                    navigateTo(`/blo
+                g/${blog.slug}`)
+                  "
+                  >Read</a
+                >
                 <a
                   @click="navigateTo(`/blog/edit/${blog.slug}`)"
                   v-if="isAuthor(blog.user_id)"
@@ -168,9 +174,9 @@ onUnmounted(() => {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  padding-top: 20px;
-  padding-left: 50px;
-  padding-right: 15px;
+  padding-top: 15px;
+  padding-left: 38px;
+  padding-right: 16px;
 }
 
 .blog-posts {
@@ -200,7 +206,6 @@ onUnmounted(() => {
 
   .dropbtn {
     color: white;
-    padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
@@ -208,7 +213,6 @@ onUnmounted(() => {
 
   .dropbtn img {
     width: 20px;
-    height: 20px;
   }
 
   .dropdown {
@@ -216,7 +220,6 @@ onUnmounted(() => {
     display: inline-block;
     width: 100%;
     max-width: 400px;
-
     display: flex;
     justify-content: end;
   }
@@ -266,6 +269,29 @@ onUnmounted(() => {
   }
 }
 
+@media (max-width: 915px) {
+  .post-author-name {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+  }
+
+  .post-author-date {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 400px) {
+  .post-author-date {
+    max-width: 100px;
+  }
+}
+
 .post-author {
   display: flex;
   gap: 10px;
@@ -274,7 +300,6 @@ onUnmounted(() => {
 .post-title {
   font-size: 1.5em;
   font-weight: bold;
-  max-width: 700px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -283,7 +308,6 @@ onUnmounted(() => {
 
 .post-description {
   color: #666;
-  max-width: 900px;
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;

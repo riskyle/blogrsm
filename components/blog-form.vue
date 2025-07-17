@@ -108,7 +108,7 @@ label {
 
 .container {
   display: flex;
-  padding-left: 50px;
+  padding-left: 30px;
 }
 
 .form-container {
@@ -209,7 +209,7 @@ label {
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
-    padding-left: 50px;
+    padding-left: 20px;
   }
 
   .form-container,
