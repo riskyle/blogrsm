@@ -15,6 +15,18 @@ const supabase = useSupabaseClient();
 
 const blogs = ref([]);
 
+const deleteBlog = async (id) => {
+  try {
+    const { error } = await supabase.from("blogs").delete().eq("id", id);
+    if (error) {
+      throw error;
+    }
+    blogs.value = blogs.value.filter((blog) => blog.id !== id);
+  } catch (error) {
+    console.error("Error deleting blog post:", error);
+  }
+};
+
 onMounted(async () => {
   try {
     const { data, error } = await supabase
@@ -34,5 +46,5 @@ onMounted(async () => {
 </script>
 
 <template>
-  <blog-post :blogs="blogs" />
+  <blog-post :blogs="blogs" @deleteBlog="deleteBlog" />
 </template>

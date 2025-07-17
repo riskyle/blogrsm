@@ -14,6 +14,11 @@ const supabase = useSupabaseClient();
 const toast = useNuxtApp().$toast;
 
 const submitPost = async (title, content) => {
+  if (!title || !content || content.length < 8) {
+    toast.error("Title and content cannot be empty.");
+    return;
+  }
+
   const slug = title
     .replace(/[^a-zA-Z0-9\s]/g, "")
     .replace(/\s+/g, "-")

@@ -6,7 +6,7 @@ import ConfirmDialog from "~/components/confirm-dialog.vue";
 const props = defineProps({
   blogs: {
     type: Array,
-    required: true,
+    required: false,
   },
 });
 
@@ -17,13 +17,14 @@ const supabase = useSupabaseClient();
 const toast = useNuxtApp().$toast;
 
 const blogId = ref(null);
-const blogs = ref([]);
 const showConfirm = ref(false);
 const message = ref("Are you sure you want to delete this item?");
 
-const isOpen = ref(false);
+const blogs = ref([...props.blogs]);
 const openDropdowns = ref({});
 const dropdownRefs = ref([]);
+
+const emit = defineEmits(["deleteBlog"]);
 
 const dateTimeFormat = (date) => {
   return dayjs(date).fromNow();
@@ -31,9 +32,8 @@ const dateTimeFormat = (date) => {
 
 const confirmDelete = async () => {
   showConfirm.value = false;
-  blogs.value = blogs.value.filter((blog) => blog.id !== blogId.value);
+  emit("deleteBlog", blogId.value);
   toast.success("Blog post deleted successfully!");
-  await supabase.from("blogs").delete().eq("id", blogId.value);
 };
 
 const cancelDelete = () => {
@@ -106,13 +106,7 @@ onUnmounted(() => {
                 <img src="../assets/icons/dots-horizontal-icon.svg" alt="" />
               </div>
               <div v-if="openDropdowns[index]" class="dropdown-content">
-                <a
-                  @click="
-                    navigateTo(`/blo
-                g/${blog.slug}`)
-                  "
-                  >Read</a
-                >
+                <a @click="navigateTo(`/blog/${blog.slug}`)">Read</a>
                 <a
                   @click="navigateTo(`/blog/edit/${blog.slug}`)"
                   v-if="isAuthor(blog.user_id)"
@@ -207,7 +201,7 @@ onUnmounted(() => {
   align-items: center;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 757px) {
   .post-actions button {
     display: none;
   }
@@ -258,7 +252,7 @@ onUnmounted(() => {
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 756px) {
   .dropbtn,
   .dropdown-content a {
     display: none;

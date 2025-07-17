@@ -50,14 +50,6 @@ const changePassword = async () => {
     confirmPassword: confirmPassword.value,
   });
 };
-
-// watch(
-//   () => user.value,
-//   (newUser) => {
-//     userData.value = newUser || {};
-//     console.log("User data updated:", userData.value);
-//   }
-// );
 </script>
 
 <template>
@@ -170,14 +162,23 @@ label {
   margin: 0 auto;
   padding-bottom: 50px;
   padding-left: 20px;
+  padding-right: 0px;
 }
 
 @media (max-width: 1100px) {
   .profile {
-    padding: 0px 40px;
+    padding-left: 30px;
+    padding-right: 8px;
   }
+
   .form-input {
-    min-width: 250px;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1100px) {
+  .form-input {
+    width: 50%;
   }
 }
 
@@ -191,7 +192,7 @@ label {
 
 .profile-box {
   width: 100%;
-  max-width: 1200px;
+  max-width: 2000px;
   padding: 30px 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -209,6 +210,7 @@ label {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  width: 100%;
 }
 
 .profile-img {
@@ -251,8 +253,11 @@ label {
     width: 60px;
   }
 
-  .name {
-    font-size: 1em;
+  .email {
+    max-width: 200px;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -268,7 +273,6 @@ label {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
-  width: 50%;
 }
 
 .save-btn {
