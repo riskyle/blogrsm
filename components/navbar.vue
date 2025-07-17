@@ -56,7 +56,7 @@ li {
 }
 
 @media (max-width: 700px) {
-  li .user-info {
+  .user-info {
     display: none;
   }
 }

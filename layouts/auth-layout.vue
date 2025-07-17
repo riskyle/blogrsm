@@ -1,15 +1,21 @@
 <template>
   <Navbar />
   <Sidebar />
-  <div class="container">
+  <div class="main-container">
     <slot />
   </div>
 </template>
 
 <style scoped>
-.container {
+.main-container {
   width: 100%;
   padding-top: 72px;
   margin-left: 250px;
+}
+
+@media (max-width: 1100px) {
+  .main-container {
+    margin-left: 40px;
+  }
 }
 </style>

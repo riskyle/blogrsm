@@ -12,10 +12,7 @@ const user = ref<User | null>(null);
 const toast: any = useNuxtApp().$toast;
 
 const comingSoon = () => {
-  toast.info("This feature is coming soon!", {
-    position: "bottom-right",
-    duration: 3000,
-  });
+  toast.info("This feature is coming soon!");
 };
 
 onMounted(async () => {
