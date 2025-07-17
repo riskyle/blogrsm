@@ -13,14 +13,16 @@ definePageMeta({
 import { BsFacebook, BsGoogle, BsGithub } from "vue-icons-plus/bs";
 import { useAuth } from "~/composable/useAuth";
 
+const toast = useNuxtApp().$toast;
+
+const { register, loginWithGoogle, loginWithFacebook } = useAuth();
+
 const firstname = ref("");
 const lastname = ref("");
 const email = ref("");
 const contact_number = ref("");
 const password = ref("");
 const status = ref("");
-
-const { register, loginWithGoogle, loginWithFacebook } = useAuth();
 
 const signUp = async () => {
   await register({
@@ -35,6 +37,8 @@ const signUp = async () => {
   contact_number.value = "";
   email.value = "";
   password.value = "";
+
+  toast.success(`Account created successfully! Confirm your email to log in.`);
 };
 
 const signInWithGoogle = () => {
