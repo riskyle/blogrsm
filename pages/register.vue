@@ -20,11 +20,15 @@ const { register, loginWithGoogle, loginWithFacebook } = useAuth();
 const firstname = ref("");
 const lastname = ref("");
 const email = ref("");
-const contact_number = ref("");
 const password = ref("");
 const status = ref("");
 
 const signUp = async () => {
+  if (!firstname.value || !lastname.value || !email.value || !password.value) {
+    toast.error("All fields are required.");
+    return;
+  }
+
   await register({
     name: `${firstname.value} ${lastname.value}`,
     contact_number: contact_number.value,
@@ -81,12 +85,6 @@ const signInWithFacebook = () => {
       <input type="text" placeholder="First Name" v-model="firstname" />
       <input type="text" placeholder="Last Name" v-model="lastname" />
       <input type="email" placeholder="Email" v-model="email" />
-      <input
-        type="number"
-        placeholder="Contact Number"
-        v-model="contact_number"
-        maxlength="11"
-      />
       <input type="password" placeholder="Password" v-model="password" />
       <p class="status">{{ status }}</p>
       <button type="submit">Sign Up</button>
