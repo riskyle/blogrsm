@@ -115,7 +115,7 @@ label {
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  width: 550px;
+  width: 1300px;
   height: 100%;
   max-width: 100%;
   padding-top: 0;

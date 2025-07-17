@@ -245,7 +245,9 @@ const editor = useEditor({
 watch(
   () => props.modelValue,
   (newContent) => {
-    editor.value.commands.setContent(newContent);
+    if (editor.value.getHTML() !== newContent) {
+      editor.value.commands.setContent(newContent);
+    }
   }
 );
 
