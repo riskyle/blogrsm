@@ -20,8 +20,8 @@ const blogPost = ref(null);
 
 onMounted(async () => {
   const { data, error } = await supabase
-    .from("blogs_with_users")
-    .select("*")
+    .from("blogs")
+    .select("*, profiles(name)")
     .eq("slug", router.currentRoute.value.params.slug)
     .single();
 
@@ -47,7 +47,7 @@ onMounted(async () => {
 
     <footer>
       <div class="post-footer">
-        <p>Posted by: {{ blogPost?.name }}</p>
+        <p>Posted by: {{ blogPost?.profiles?.name }}</p>
         <p>On: {{ new Date(blogPost?.created_at).toLocaleDateString() }}</p>
       </div>
     </footer>

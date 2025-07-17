@@ -12,7 +12,6 @@ export const useAuth = () => {
                     emailRedirectTo: `${window.location.origin}/confirm-email`,
                     data: {
                         name: credentials.name,
-                        phone: credentials.contact_number,
                     },
                 }
             });
@@ -24,7 +23,6 @@ export const useAuth = () => {
             return { data, error };
         } catch (error: any) {
             console.error("Error signing up:", error);
-            alert(error.message);
         }
     }
 
@@ -111,6 +109,31 @@ export const useAuth = () => {
 
     }
 
+
+    const deleteSelf = async () => {
+        try {
+            // const { error } = await supabase.auth.admin.deleteUser()
+            // if (error) throw error
+
+            // Redirect to login or home page
+            await navigateTo('/login')
+            return { success: true }
+        } catch (error: any) {
+            console.error('Error deleting user:', error)
+            return { success: false, error: error.message }
+        }
+    }
+
+    const getLoginMethod = () => {
+        const user = useSupabaseUser();
+        if (!user.value || !user.value.app_metadata) {
+            return null;
+        }
+
+        const provider = user.value.app_metadata?.provider
+        return provider === 'email' ? 'email' : provider
+    }
+
     return {
         register,
         signInWithPassword,
@@ -118,5 +141,7 @@ export const useAuth = () => {
         verifyOtp,
         loginWithGoogle,
         loginWithFacebook,
+        deleteSelf,
+        getLoginMethod,
     }
 }

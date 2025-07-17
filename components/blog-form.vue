@@ -76,7 +76,9 @@ onMounted(async () => {
 
     <div class="preview">
       <h2>Preview</h2>
-      <h3>{{ title }}</h3>
+      <div class="preview-title">
+        <h3>{{ title }}</h3>
+      </div>
       <div v-html="content"></div>
     </div>
   </div>
@@ -90,7 +92,6 @@ h1 {
 
 h3 {
   font-size: 30px;
-  margin-bottom: 2rem;
 }
 
 form {
@@ -102,6 +103,7 @@ form {
 
 label {
   font-size: 17px;
+  color: #333;
 }
 
 .container {
@@ -123,9 +125,16 @@ label {
 
 .preview {
   padding-left: 2rem;
-  width: 600px;
+  width: 100%;
   height: 100%;
-  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.preview-title {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 1rem;
 }
 
 .form-group {
@@ -197,5 +206,33 @@ label {
 #title:focus {
   border-color: #007bff;
   outline: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding-left: 50px;
+  }
+
+  .form-container,
+  .preview {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .form-container {
+    padding: 1rem;
+  }
+
+  .preview {
+    padding-left: 20px;
+    margin-top: 2rem;
+  }
+}
+@media (max-width: 500px) {
+  .post-button,
+  .cancel-button {
+    padding: 0.7rem 2rem;
+  }
 }
 </style>

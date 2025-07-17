@@ -20,12 +20,14 @@ const submitPost = async (title, content) => {
     .toLowerCase()
     .replace(/^-+|-+$/g, "");
 
+  const id = useSupabaseUser().value?.id;
+
   try {
     const { data, error } = await supabase.from("blogs").insert({
       title: title,
       content: content,
       slug: slug,
-      user_id: useSupabaseUser().value?.id,
+      user_id: id,
     });
 
     if (error) {

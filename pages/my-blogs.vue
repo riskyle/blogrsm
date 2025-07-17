@@ -1,4 +1,6 @@
 <script setup>
+import { onMounted, ref } from "vue";
+
 definePageMeta({
   title: "My Blogs",
   meta: [
@@ -10,13 +12,34 @@ definePageMeta({
   middleware: "auth",
   layout: "auth-layout",
 });
+
+const blogs = ref([]);
+const supabase = useSupabaseClient();
+
+onMounted(async () => {
+  try {
+    const { data, error } = await supabase
+      .from("blogs")
+      .select("*, profiles(name)")
+      .eq("user_id", useSupabaseUser().value?.id)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      throw error;
+    }
+
+    blogs.value = data;
+  } catch (error) {
+    console.error("Error fetching blog posts:", error);
+  }
+});
 </script>
 
 <template>
   <div class="blog-header">
     <h1>My Blog Post</h1>
   </div>
-  <blog-post />
+  <blog-post :blogs="blogs" />
 </template>
 
 <style scoped>

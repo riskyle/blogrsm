@@ -20,10 +20,10 @@ const contact_number = ref("");
 const password = ref("");
 const status = ref("");
 
-const { register } = useAuth();
+const { register, loginWithGoogle, loginWithFacebook } = useAuth();
 
-const signUp = () => {
-  register({
+const signUp = async () => {
+  await register({
     name: `${firstname.value} ${lastname.value}`,
     contact_number: contact_number.value,
     email: email.value,
@@ -36,6 +36,26 @@ const signUp = () => {
   email.value = "";
   password.value = "";
 };
+
+const signInWithGoogle = () => {
+  loginWithGoogle()
+    .then(() => {
+      navigateTo("/");
+    })
+    .catch((error) => {
+      toast.error(error.message || "Failed to sign in with Google.");
+    });
+};
+
+const signInWithFacebook = () => {
+  loginWithFacebook()
+    .then(() => {
+      navigateTo("/");
+    })
+    .catch((error) => {
+      toast.error(error.message || "Failed to sign in with Facebook.");
+    });
+};
 </script>
 
 <template>
@@ -43,10 +63,10 @@ const signUp = () => {
     <form @submit.prevent="signUp">
       <h1>Create Account</h1>
       <div class="social-container">
-        <a href="#" class="social"
+        <a href="#" @click="signInWithFacebook" class="social"
           ><i class="facebook-icon"><BsFacebook /></i
         ></a>
-        <a href="#" class="social"
+        <a href="#" @click="signInWithGoogle" class="social"
           ><i class="google-icon"><BsGoogle /></i
         ></a>
         <a href="#" class="social"
@@ -143,7 +163,7 @@ form {
   padding: 0 50px;
   padding-top: 30px;
   height: 660px;
-  width: 500px;
+  width: 600px;
   max-height: 707px;
   text-align: center;
 }
@@ -159,8 +179,8 @@ input {
 .container {
   background: #f6f5f7;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100vh;
   width: 100%;
   max-width: 100%;

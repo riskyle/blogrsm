@@ -20,15 +20,16 @@ const logout = async () => {
     <div class="navbar">
       <div class="logo">
         <img
+          v-if="isLoggedIn"
           class="burger-icon"
           src="../assets/icons/burger-icon.svg"
           alt="Banner"
           @click="toggleSidebar"
         />
-        <div class="blog-title">Blog ito mga idol</div>
+        <div class="blog-title">BloChaTod</div>
       </div>
       <ul>
-        <li v-if="isLoggedIn">
+        <li class="user-info" v-if="isLoggedIn">
           <strong>Hello,</strong> <i>{{ email }}</i>
         </li>
         <li v-if="isLoggedIn">
@@ -52,6 +53,12 @@ ul {
 
 li {
   margin: 0;
+}
+
+@media (max-width: 700px) {
+  li .user-info {
+    display: none;
+  }
 }
 
 a {

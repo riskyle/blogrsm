@@ -3,6 +3,13 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ConfirmDialog from "~/components/confirm-dialog.vue";
 
+const props = defineProps({
+  blogs: {
+    type: Array,
+    required: true,
+  },
+});
+
 dayjs.extend(relativeTime);
 
 const user = useSupabaseUser();
@@ -14,26 +21,12 @@ const blogs = ref([]);
 const showConfirm = ref(false);
 const message = ref("Are you sure you want to delete this item?");
 
+const isOpen = ref(false);
+const openDropdowns = ref({});
+const dropdownRefs = ref([]);
+
 const dateTimeFormat = (date) => {
   return dayjs(date).fromNow();
-};
-
-const getBlogPosts = async () => {
-  try {
-    const { data, error } = await supabase
-      .from("blogs_with_users")
-      .select("*")
-      .eq("user_id", user.value.id)
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      throw error;
-    }
-
-    blogs.value = data;
-  } catch (error) {
-    console.error("Error fetching blog posts:", error);
-  }
 };
 
 const confirmDelete = async () => {
@@ -57,8 +50,34 @@ const isAuthor = (authorId) => {
   return user.value && user.value.id === authorId;
 };
 
-onMounted(async () => {
-  await getBlogPosts();
+const toggle = (index) => {
+  Object.keys(openDropdowns.value).forEach((key) => {
+    if (key != index) openDropdowns.value[key] = false;
+  });
+
+  openDropdowns.value[index] = !openDropdowns.value[index];
+};
+
+const handleClickOutside = (event) => {
+  let clickedInside = false;
+
+  dropdownRefs.value.forEach((ref) => {
+    if (ref && ref.contains(event.target)) {
+      clickedInside = true;
+    }
+  });
+
+  if (!clickedInside) {
+    openDropdowns.value = {};
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("click", handleClickOutside);
 });
 </script>
 
@@ -66,15 +85,38 @@ onMounted(async () => {
   <main>
     <div class="container">
       <div class="content">
-        <div class="blog-posts" v-for="blog in blogs" :key="blog.id">
+        <div
+          class="blog-posts"
+          v-for="(blog, index) in props.blogs"
+          :key="blog.id"
+          :ref="(el) => (dropdownRefs[index] = el)"
+        >
           <div class="post-header">
             <div class="post-author">
               <div class="post-author-name">
-                {{ blog.name }}
+                {{ blog.profiles.name }}
               </div>
               &middot;
               <div class="post-author-date">
                 Posted {{ dateTimeFormat(blog.created_at) }}
+              </div>
+            </div>
+            <div class="dropdown">
+              <div class="dropbtn" @click="toggle(index)">
+                <img src="../assets/icons/dots-horizontal-icon.svg" alt="" />
+              </div>
+              <div v-if="openDropdowns[index]" class="dropdown-content">
+                <a @click="navigateTo(`/blog/${blog.slug}`)">Read</a>
+                <a
+                  @click="navigateTo(`/blog/edit/${blog.slug}`)"
+                  v-if="isAuthor(blog.user_id)"
+                  >Edit</a
+                >
+                <a
+                  @click="uSureToDelete(blog.id, blog.title)"
+                  v-if="isAuthor(blog.user_id)"
+                  >Delete</a
+                >
               </div>
             </div>
             <div class="post-actions">
@@ -125,12 +167,15 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
   padding-top: 20px;
   padding-left: 50px;
+  padding-right: 15px;
 }
 
 .blog-posts {
-  width: 800px;
+  width: 100%;
+  max-width: 900px;
   padding: 20px;
   background: white;
   border-radius: 8px;
@@ -142,6 +187,83 @@ onMounted(async () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@media (max-width: 900px) {
+  .post-actions button {
+    display: none;
+  }
+
+  .post-author {
+    font-size: 15px;
+  }
+
+  .dropbtn {
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .dropbtn img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 400px;
+
+    display: flex;
+    justify-content: end;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 50px;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown .dropdown-content {
+    display: block;
+  }
+}
+
+@media (min-width: 900px) {
+  .dropbtn,
+  .dropdown-content a {
+    display: none;
+  }
+
+  .post-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .read-more,
+  .edit,
+  .delete {
+    background-color: #ff4b2b;
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 }
 
 .post-author {
@@ -168,79 +290,5 @@ onMounted(async () => {
   overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom: 0;
-}
-
-.post-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.read-more,
-.edit,
-.delete {
-  background-color: #ff4b2b;
-  color: white;
-  border: none;
-  padding: 5px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* edit modal */
-.post-button {
-  align-self: flex-end;
-  padding: 0.7rem 3rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.post-button:hover {
-  background-color: #0056b3;
-}
-
-.update-form {
-  display: flex;
-  gap: 0.5rem;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
-.button-group {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-}
-
-#title {
-  width: 400px;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 25px;
-  max-width: 100%;
-}
-
-#content {
-  width: 500px;
-  height: 200px;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 20px;
-  max-width: 100%;
-  min-width: 100%;
-  min-height: 100px;
-}
-
-#content:focus,
-#title:focus {
-  border-color: #007bff;
-  outline: none;
 }
 </style>

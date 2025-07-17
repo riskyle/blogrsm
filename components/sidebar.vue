@@ -1,12 +1,22 @@
 <script lang="tsx" setup>
+import defaultImg from "../assets/img/default.jpg";
 import { useSidebar } from "~/composable/useSidebar";
-import { ref, onMounted } from "vue";
 import type { User } from "~/types/sidebar";
+import { ref, onMounted } from "vue";
 
 const { isCollapsed } = useSidebar();
 
 const supabase = useSupabaseClient();
 const user = ref<User | null>(null);
+
+const toast: any = useNuxtApp().$toast;
+
+const comingSoon = () => {
+  toast.info("This feature is coming soon!", {
+    position: "bottom-right",
+    duration: 3000,
+  });
+};
 
 onMounted(async () => {
   const { data, error } = await supabase.auth.getUser();
@@ -16,6 +26,18 @@ onMounted(async () => {
     user.value = data.user.user_metadata as any;
   }
 });
+
+watch(
+  () => useSupabaseUser().value,
+  (newUser) => {
+    if (newUser) {
+      user.value = newUser.user_metadata as User;
+    } else {
+      user.value = null;
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
@@ -29,7 +51,7 @@ onMounted(async () => {
           <div>
             <img
               class="profile-img"
-              :src="user?.avatar_url || '../assets/img/default.jpg'"
+              :src="user?.avatar_url || defaultImg"
               alt="pic"
             />
           </div>
@@ -62,7 +84,7 @@ onMounted(async () => {
           <div class="sidebar-item">Post</div>
         </div>
       </NuxtLink>
-      <NuxtLink to="/todo/list">
+      <NuxtLink to="#" @click="comingSoon">
         <div class="sidebar-navbar">
           <div class="sidebar-icon">
             <img
@@ -72,6 +94,18 @@ onMounted(async () => {
             />
           </div>
           <div class="sidebar-item">Todo List</div>
+        </div>
+      </NuxtLink>
+      <NuxtLink to="#" @click="comingSoon">
+        <div class="sidebar-navbar">
+          <div class="sidebar-icon">
+            <img
+              class="icon"
+              src="../assets/icons/chat-round-line-icon.svg"
+              alt=""
+            />
+          </div>
+          <div class="sidebar-item">Chat</div>
         </div>
       </NuxtLink>
     </div>
@@ -92,6 +126,16 @@ onMounted(async () => {
   height: 100%;
   z-index: 1000;
   transition: width 0.3s ease;
+}
+
+@media (max-width: 1100px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar-item {
+    display: none;
+  }
 }
 
 .sidebar-collapsed {

@@ -7,16 +7,15 @@
 <script setup lang="ts">
 useHead({
   meta: [{ name: "viewport", content: "width=device-width, initial-scale=1" }],
-  link: [{ rel: "icon", href: "/favicon.ico" }],
+  link: [{ rel: "icon", href: "" }],
   htmlAttrs: {
     lang: "en",
   },
 });
 
-const title = "Blog - Nuxt + Supabase Todo App";
+const title = "BloChaTod - A Blog Application with Todo and Chat Features";
 const description =
-  "A simple blog application built with Nuxt 3 and Supabase, featuring user authentication, CRUD operations, and a responsive design.";
-
+  "A blog application that mixed with todo and chat features.";
 useSeoMeta({
   title,
   ogTitle: title,
