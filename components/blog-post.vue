@@ -84,7 +84,7 @@ onUnmounted(() => {
 <template>
   <main>
     <div class="container">
-      <div class="content">
+      <div class="content" v-if="props.blogs.length > 0">
         <div
           class="blog-posts"
           v-for="(blog, index) in props.blogs"
@@ -156,6 +156,12 @@ onUnmounted(() => {
           </div>
         </div>
       </div>
+      <div v-else>
+        No blogs available. Create your first blog post! Go to
+        <NuxtLink class="create-blog-link" to="/blog/create"
+          >Create Blog</NuxtLink
+        >
+      </div>
     </div>
   </main>
 
@@ -169,6 +175,12 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+.create-blog-link {
+  color: #520c00;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .container {
   display: flex;
   flex-direction: column;
