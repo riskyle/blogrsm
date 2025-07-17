@@ -56,22 +56,22 @@ onMounted(async () => {
   <div class="container">
     <div class="form-container">
       <h1>{{ props.header }}</h1>
-      <form @submit.prevent="handleSubmit">
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input type="text" id="title" v-model="title" required />
-        </div>
-        <div class="form-group">
-          <label for="content">Content</label>
-          <tiptap-editor v-model="content" :show-output="false" />
-        </div>
-        <div class="button-group">
-          <button class="cancel-button" type="button" @click="handleCancel">
-            Cancel
-          </button>
-          <button class="post-button" type="submit">{{ props.button }}</button>
-        </div>
-      </form>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" v-model="title" required />
+      </div>
+      <div class="form-group">
+        <label for="content">Content</label>
+        <tiptap-editor v-model="content" :show-output="false" />
+      </div>
+      <div class="button-group">
+        <button class="cancel-button" type="button" @click="handleCancel">
+          Cancel
+        </button>
+        <button class="post-button" @click="handleSubmit">
+          {{ props.button }}
+        </button>
+      </div>
     </div>
 
     <div class="preview">
