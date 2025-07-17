@@ -22,6 +22,7 @@ const lastname = ref("");
 const email = ref("");
 const password = ref("");
 const status = ref("");
+const loading = ref("");
 
 const signUp = async () => {
   if (!firstname.value || !lastname.value || !email.value || !password.value) {
@@ -29,18 +30,20 @@ const signUp = async () => {
     return;
   }
 
+  loading.value = true;
+
   await register({
     name: `${firstname.value} ${lastname.value}`,
-    contact_number: contact_number.value,
     email: email.value,
     password: password.value,
   });
 
   firstname.value = "";
   lastname.value = "";
-  contact_number.value = "";
   email.value = "";
   password.value = "";
+
+  loading.value = false;
 
   toast.success(`Account created successfully! Confirm your email to log in.`);
 };
@@ -67,29 +70,33 @@ const signInWithFacebook = () => {
 </script>
 
 <template>
-  <div class="container" id="container">
-    <form @submit.prevent="signUp">
-      <h1>Create Account</h1>
-      <div class="social-container">
-        <a href="#" @click="signInWithFacebook" class="social"
-          ><i class="facebook-icon"><BsFacebook /></i
-        ></a>
-        <a href="#" @click="signInWithGoogle" class="social"
-          ><i class="google-icon"><BsGoogle /></i
-        ></a>
-        <a href="#" class="social"
-          ><i class="github-icon"><BsGithub /></i
-        ></a>
-      </div>
-      <span>or use your email for registration</span>
-      <input type="text" placeholder="First Name" v-model="firstname" />
-      <input type="text" placeholder="Last Name" v-model="lastname" />
-      <input type="email" placeholder="Email" v-model="email" />
-      <input type="password" placeholder="Password" v-model="password" />
-      <p class="status">{{ status }}</p>
-      <button type="submit">Sign Up</button>
-      <p>Have an account already? <NuxtLink to="/login">Sign in</NuxtLink></p>
-    </form>
+  <div class="login-page">
+    <div class="container" id="container">
+      <form @submit.prevent="signUp">
+        <h1>Create Account</h1>
+        <div class="social-container">
+          <a href="#" @click="signInWithFacebook" class="social"
+            ><i class="facebook-icon"><BsFacebook /></i
+          ></a>
+          <a href="#" @click="signInWithGoogle" class="social"
+            ><i class="google-icon"><BsGoogle /></i
+          ></a>
+          <a href="#" class="social"
+            ><i class="github-icon"><BsGithub /></i
+          ></a>
+        </div>
+        <span>or use your email for registration</span>
+        <input type="text" placeholder="First Name" v-model="firstname" />
+        <input type="text" placeholder="Last Name" v-model="lastname" />
+        <input type="email" placeholder="Email" v-model="email" />
+        <input type="password" placeholder="Password" v-model="password" />
+        <p class="status">{{ status }}</p>
+        <button type="submit">
+          {{ loading ? "Please Wait..." : "Sign Up" }}
+        </button>
+        <p>Have an account already? <NuxtLink to="/login">Sign in</NuxtLink></p>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -163,10 +170,8 @@ form {
   justify-content: center;
   flex-direction: column;
   padding: 0 50px;
-  padding-top: 30px;
-  height: 660px;
+  height: 600px;
   width: 600px;
-  max-height: 707px;
   text-align: center;
 }
 
@@ -178,17 +183,20 @@ input {
   width: 100%;
 }
 
+.login-page {
+  padding-top: 80px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .container {
   background: #f6f5f7;
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 50vh;
   width: 100%;
   max-width: 100%;
-  min-height: 480px;
   font-family: "Montserrat", sans-serif;
-  padding-top: 40px;
 }
 
 .container .sign-up-container {
