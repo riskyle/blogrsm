@@ -199,6 +199,16 @@ input {
   border-radius: 4px;
 }
 
+input:focus,
+textarea:focus {
+  scroll-margin-top: 100px;
+  scroll-margin-bottom: 100px;
+}
+
+.form-container {
+  padding-bottom: 300px;
+}
+
 @media (max-width: 456px) {
   .send-icon {
     width: 30px;
