@@ -26,7 +26,7 @@ const { isCollapsed } = useSidebar();
 
 @media (max-width: 1100px) {
   .main-container {
-    margin-left: 40px;
+    margin-left: 20px;
   }
 }
 </style>

@@ -56,9 +56,8 @@ onMounted(async () => {
 <style scoped>
 .blog-post {
   max-width: 1290px;
-  padding-left: 70px;
 }
-
+/*
 .post-header {
   margin-bottom: 40px;
 }
@@ -69,33 +68,63 @@ onMounted(async () => {
   border-radius: 8px;
   font-size: 1.2em;
 }
+*/
 
 .post-footer {
   font-size: 0.9em;
   color: #666;
 }
 
-@media screen and (max-width: 900px) {
+@media (max-width: 500px) {
   .blog-post {
-    padding-left: 45px;
-    padding-right: 10px;
+    padding-left: 20px;
+    padding-right: 0px;
+  }
+
+  .post-header {
+    margin-bottom: 20px;
+    font-size: 10px;
+  }
+
+  .post-content {
+    padding-right: 5px;
+    padding-bottom: 20px;
+    font-size: 0.5em;
+  }
+}
+
+@media (min-width: 500px) {
+  .blog-post {
+    padding-left: 30px;
+    padding-right: 0px;
+  }
+
+  .post-header {
+    margin-bottom: 20px;
+    font-size: 10px;
+  }
+
+  .post-content {
+    padding-right: 5px;
+    padding-bottom: 20px;
+    font-size: 0.5em;
+  }
+}
+
+@media (min-width: 768px) {
+  .blog-post {
+    padding-left: 35px;
+    padding-right: 5px;
   }
   .post-header {
     margin-bottom: 20px;
+    font-size: 1em;
   }
   .post-content {
-    padding-right: 10px;
+    padding-right: 5px;
     padding-bottom: 10px;
     white-space: wrap;
-  }
-  .post-header h1 {
     font-size: 1.2em;
-  }
-  .post-content div {
-    font-size: 0.9em;
-  }
-  .post-content p {
-    font-size: 0.9em;
   }
 }
 </style>

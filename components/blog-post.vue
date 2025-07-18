@@ -184,9 +184,115 @@ onUnmounted(() => {
   text-transform: capitalize;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.blog-posts {
+  width: 100%;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.post-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.post-description {
+  color: #666;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+}
+
+.post-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.read-more,
+.edit,
+.delete {
+  background-color: #ff4b2b;
+  color: white;
+  border: none;
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@media (max-width: 426px) {
+  .container {
+    padding: 15px 5px 15px 20px;
+  }
+
+  .post-header {
+    margin-bottom: 5px;
+  }
+
+  .post-title {
+    font-size: 1em;
+  }
+
+  .post-description {
+    font-size: 0.7em;
+  }
+
+  .post-author-name,
+  .post-author-separator,
+  .post-author-date {
+    font-size: 8px;
+  }
+
+  .post-author-date {
+    max-width: 100px;
+  }
+}
+
+@media (min-width: 200px) {
+  .container {
+    padding-left: 35px;
+    padding-right: 10px;
+  }
+
+  .blog-posts {
+    max-width: 900px;
+  }
+}
+
 @media (max-width: 757px) {
   .post-actions button {
     display: none;
+  }
+
+  .dropdown {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 400px;
   }
 
   .dropbtn {
@@ -199,14 +305,6 @@ onUnmounted(() => {
   .dropbtn img {
     width: 20px;
     vertical-align: middle;
-  }
-
-  .dropdown {
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    max-width: 400px;
   }
 
   .dropdown-content {
@@ -236,22 +334,6 @@ onUnmounted(() => {
   .dropdown-content a {
     display: none;
   }
-
-  .post-actions {
-    display: flex;
-    gap: 10px;
-  }
-
-  .read-more,
-  .edit,
-  .delete {
-    background-color: #ff4b2b;
-    color: white;
-    border: none;
-    padding: 5px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
 }
 
 @media (max-width: 915px) {
@@ -271,105 +353,10 @@ onUnmounted(() => {
   }
 }
 
-@media (max-width: 426px) {
+@media (max-width: 1100px) and (min-width: 500px) {
+  .blog-header,
   .container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    padding: 15px 5px 15px 20px;
-  }
-
-  .post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-
-  .post-author-date {
-    max-width: 100px;
-  }
-
-  .post-author-name,
-  .post-author-separator,
-  .post-author-date {
-    font-size: 8px;
-  }
-
-  .blog-posts {
-    width: 100%;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-
-  .post-title {
-    font-size: 1em;
-    font-weight: bold;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    margin: 0;
-  }
-
-  .post-description {
-    color: #666;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 0;
-    font-size: 0.7em;
-  }
-}
-
-@media (min-width: 425px) {
-  .container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    padding: 15px 16px 15px 38px;
-  }
-
-  .blog-posts {
-    width: 100%;
-    max-width: 900px;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-
-  .post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .post-title {
-    font-size: 1.5em;
-    font-weight: bold;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    margin: 0;
-  }
-
-  .post-description {
-    color: #666;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 0;
+    padding-left: 50px;
   }
 }
 </style>

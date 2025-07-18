@@ -140,17 +140,6 @@ label {
   background-color: #0056b3;
 }
 
-.cancel-button {
-  padding: 0.7rem 3rem;
-  background-color: #939393;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 16px;
-}
-
 .cancel-button:hover {
   background-color: #4b4b4b;
 }
@@ -185,8 +174,7 @@ label {
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 35px;
   }
 
   .form-container,
@@ -203,25 +191,41 @@ label {
     padding-left: 20px;
     margin-top: 2rem;
   }
-}
-@media (max-width: 426px) {
-  .post-button {
-    align-self: flex-end;
+
+  .cancel-button {
     padding: 0.7rem 3rem;
-    background-color: #007bff;
+    background-color: #939393;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-size: 16px;
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    flex-direction: column;
+    padding-left: 25px;
+  }
+
+  .post-button {
+    align-self: flex-end;
+    padding: 0.4rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
     font-weight: bold;
   }
 
   .post-button,
   .cancel-button {
     padding: 0.7rem 2rem;
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .preview-title,
@@ -229,6 +233,7 @@ label {
     display: none;
   }
 }
+
 @media (min-width: 425px) {
   .post-button {
     align-self: flex-end;

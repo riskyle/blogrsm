@@ -123,7 +123,7 @@ span {
 .chat-container {
   margin: 0 auto;
   padding-top: 10px;
-  padding-left: 10px;
+  padding-left: 5px;
   display: flex;
   height: 88vh;
   width: 100%;
@@ -192,18 +192,21 @@ textarea:focus {
   padding-bottom: 300px;
 }
 
-@media (max-width: 456px) {
+@media (max-width: 1099px) {
+  .chat-container {
+    padding-left: 40px;
+  }
+}
+
+@media (max-width: 500px) {
   .send-icon {
     width: 30px;
     cursor: pointer;
     vertical-align: middle;
   }
-}
 
-@media (max-width: 1100px) and (min-width: 456px) {
-  .messages-list {
-    overflow-y: auto;
-    padding: 10px;
+  .chat-container {
+    padding-left: 25px;
   }
 }
 </style>
