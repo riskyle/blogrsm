@@ -125,6 +125,10 @@ watch(
   transition: width 0.3s ease;
 }
 
+.user-name {
+  text-transform: capitalize;
+}
+
 @media (max-width: 1100px) {
   .sidebar {
     width: 60px;

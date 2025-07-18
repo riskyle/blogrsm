@@ -16,29 +16,13 @@ import { ref, nextTick, watch } from "vue";
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 
-const messages = ref([]);
+const headers = useRequestHeaders(["cookie"]);
+
+const chats = await $fetch("/api/chats", { headers });
+
+const messages = ref([...chats]);
 const newMessage = ref("");
 const messagesContainer = ref(null);
-
-const fetchMessages = async () => {
-  try {
-    const { data, error } = await supabase
-      .from("chats")
-      .select("*")
-      .order("created_at", { ascending: true })
-      .limit(50);
-
-    if (error) {
-      throw error;
-    }
-
-    if (data) {
-      messages.value = data;
-    }
-  } catch (error) {
-    console.error("Error fetching messages:", error);
-  }
-};
 
 const sendMessage = async () => {
   if (!newMessage.value.trim()) {
@@ -85,7 +69,6 @@ watch(
 );
 
 onMounted(async () => {
-  await fetchMessages();
   scrollToBottom();
 
   const channel = await supabase
