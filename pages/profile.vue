@@ -165,23 +165,6 @@ label {
   padding-right: 13px;
 }
 
-@media (max-width: 1100px) {
-  .profile {
-    padding-left: 30px;
-    padding-right: 8px;
-  }
-
-  .form-input {
-    width: 100%;
-  }
-}
-
-@media (min-width: 1100px) {
-  .form-input {
-    width: 50%;
-  }
-}
-
 .profile-container {
   display: flex;
   flex-direction: column;
@@ -206,13 +189,6 @@ label {
   margin-bottom: 20px;
 }
 
-.profile-info {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  width: 100%;
-}
-
 .profile-img {
   width: 80px;
   border-radius: 50%;
@@ -220,13 +196,11 @@ label {
   object-position: center;
 }
 
-.profile-actions {
+.profile-info {
   display: flex;
-  gap: 10px;
-}
-
-.profile-description {
-  margin-bottom: 30px;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
 }
 
 .profile-info-title {
@@ -234,6 +208,7 @@ label {
   font-weight: bold;
   margin-bottom: 5px;
 }
+
 .profile-info-subtitle {
   font-size: 1em;
   color: #666;
@@ -249,17 +224,13 @@ label {
   color: #666;
 }
 
-@media (max-width: 600px) {
-  .profile-img {
-    width: 60px;
-  }
+.profile-actions {
+  display: flex;
+  gap: 10px;
+}
 
-  .email {
-    max-width: 200px;
-    white-space: wrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+.profile-description {
+  margin-bottom: 30px;
 }
 
 .form-group {
@@ -293,5 +264,78 @@ label {
   padding: 10px 15px;
   border-radius: 4px;
   cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .profile {
+    padding-left: 20px;
+    padding-right: 10px;
+  }
+}
+
+@media (min-width: 400px) {
+  .profile-img {
+    width: 60px;
+  }
+
+  .name {
+    max-width: 200px;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .email {
+    max-width: 200px;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 500px) {
+  .profile {
+    padding-left: 40px;
+    padding-right: 10px;
+  }
+
+  .name {
+    max-width: 100px;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .email {
+    max-width: 100px;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (min-width: 500px) {
+  .profile {
+    padding-left: 50px;
+    padding-right: 10px;
+  }
+}
+
+@media (max-width: 560px) {
+  .profile {
+    padding-left: 35px;
+    padding-right: 8px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .profile {
+    padding-left: 20px;
+    padding-right: 10px;
+  }
+
+  .form-input {
+    width: 50%;
+  }
 }
 </style>
