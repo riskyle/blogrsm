@@ -1,3 +1,57 @@
+<script setup>
+import { useEditor, EditorContent } from "@tiptap/vue-3";
+import StarterKit from "@tiptap/starter-kit";
+import { onBeforeUnmount } from "vue";
+import Table from "@tiptap/extension-table";
+import TableRow from "@tiptap/extension-table-row";
+import TableHeader from "@tiptap/extension-table-header";
+import TableCell from "@tiptap/extension-table-cell";
+
+const props = defineProps({
+  modelValue: {
+    type: String,
+    default: "",
+  },
+  showOutput: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const emit = defineEmits(["update:modelValue"]);
+
+const editor = useEditor({
+  content: props.modelValue,
+  extensions: [
+    StarterKit,
+    Table.configure({
+      resizable: true,
+    }),
+    TableRow,
+    TableHeader,
+    TableCell,
+  ],
+  onUpdate: ({ editor }) => {
+    emit("update:modelValue", editor.getHTML());
+  },
+});
+
+watch(
+  () => props.modelValue,
+  (newContent) => {
+    if (editor.value.getHTML() !== newContent) {
+      editor.value.commands.setContent(newContent);
+    }
+  }
+);
+
+onBeforeUnmount(() => {
+  if (editor.value) {
+    editor.value.destroy();
+  }
+});
+</script>
+
 <template>
   <div class="tiptap-editor">
     <div class="toolbar" v-if="editor">
@@ -203,60 +257,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { useEditor, EditorContent } from "@tiptap/vue-3";
-import StarterKit from "@tiptap/starter-kit";
-import { onBeforeUnmount } from "vue";
-import Table from "@tiptap/extension-table";
-import TableRow from "@tiptap/extension-table-row";
-import TableHeader from "@tiptap/extension-table-header";
-import TableCell from "@tiptap/extension-table-cell";
-
-const props = defineProps({
-  modelValue: {
-    type: String,
-    default: "",
-  },
-  showOutput: {
-    type: Boolean,
-    default: false,
-  },
-});
-
-const emit = defineEmits(["update:modelValue"]);
-
-const editor = useEditor({
-  content: props.modelValue,
-  extensions: [
-    StarterKit,
-    Table.configure({
-      resizable: true,
-    }),
-    TableRow,
-    TableHeader,
-    TableCell,
-  ],
-  onUpdate: ({ editor }) => {
-    emit("update:modelValue", editor.getHTML());
-  },
-});
-
-watch(
-  () => props.modelValue,
-  (newContent) => {
-    if (editor.value.getHTML() !== newContent) {
-      editor.value.commands.setContent(newContent);
-    }
-  }
-);
-
-onBeforeUnmount(() => {
-  if (editor.value) {
-    editor.value.destroy();
-  }
-});
-</script>
 
 <style scoped>
 .tiptap-editor {

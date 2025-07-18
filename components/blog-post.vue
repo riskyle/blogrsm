@@ -96,7 +96,7 @@ onUnmounted(() => {
               <div class="post-author-name">
                 {{ blog.profiles.name }}
               </div>
-              &middot;
+              <span class="post-author-separator">&middot;</span>
               <div class="post-author-date">
                 Posted {{ dateTimeFormat(blog.created_at) }}
               </div>
@@ -175,39 +175,14 @@ onUnmounted(() => {
   text-decoration: underline;
 }
 
-.container {
+.post-author {
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  padding-top: 15px;
-  padding-left: 38px;
-  padding-right: 16px;
-}
-
-.blog-posts {
-  width: 100%;
-  max-width: 900px;
-  padding: 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-.post-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 10px;
 }
 
 @media (max-width: 757px) {
   .post-actions button {
     display: none;
-  }
-
-  .post-author {
-    font-size: 15px;
   }
 
   .dropbtn {
@@ -219,25 +194,25 @@ onUnmounted(() => {
 
   .dropbtn img {
     width: 20px;
+    vertical-align: middle;
   }
 
   .dropdown {
     position: relative;
-    display: inline-block;
+    display: flex;
+    justify-content: flex-end;
     width: 100%;
     max-width: 400px;
-    display: flex;
-    justify-content: end;
   }
 
   .dropdown-content {
     display: none;
     position: absolute;
+    top: 50px;
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    top: 50px;
   }
 
   .dropdown-content a {
@@ -292,33 +267,105 @@ onUnmounted(() => {
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 426px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 15px 5px 15px 20px;
+  }
+
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
   .post-author-date {
     max-width: 100px;
   }
+
+  .post-author-name,
+  .post-author-separator,
+  .post-author-date {
+    font-size: 8px;
+  }
+
+  .blog-posts {
+    width: 100%;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+
+  .post-title {
+    font-size: 1em;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .post-description {
+    color: #666;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+    font-size: 0.7em;
+  }
 }
 
-.post-author {
-  display: flex;
-  gap: 10px;
-}
+@media (min-width: 425px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 15px 16px 15px 38px;
+  }
 
-.post-title {
-  font-size: 1.5em;
-  font-weight: bold;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  margin-bottom: 0;
-}
+  .blog-posts {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
 
-.post-description {
-  color: #666;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 0;
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .post-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .post-description {
+    color: #666;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+  }
 }
 </style>

@@ -70,13 +70,66 @@ a:hover {
   text-decoration: underline;
 }
 
-button {
-  background-color: red;
-  border-radius: 4px;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  cursor: pointer;
+@media (max-width: 500px) {
+  .blog-title {
+    text-shadow: #333;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .burger-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  button {
+    background-color: red;
+    border-radius: 4px;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 500px) {
+  .blog-title {
+    text-shadow: #333;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .burger-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+  button {
+    background-color: red;
+    border-radius: 4px;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+  }
 }
 
 .navbar {
@@ -91,25 +144,5 @@ button {
   border-bottom: 2px solid #ccc;
   padding: 3px 15px;
   z-index: 9999;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.blog-title {
-  text-shadow: #333;
-  text-transform: uppercase;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-}
-
-.burger-icon {
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
 }
 </style>
