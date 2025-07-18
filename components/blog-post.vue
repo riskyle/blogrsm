@@ -180,6 +180,10 @@ onUnmounted(() => {
   gap: 10px;
 }
 
+.post-author-name {
+  text-transform: capitalize;
+}
+
 @media (max-width: 757px) {
   .post-actions button {
     display: none;

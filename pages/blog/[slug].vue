@@ -31,7 +31,6 @@ onMounted(async () => {
   }
 
   blogPost.value = data;
-  console.log(data);
 });
 </script>
 

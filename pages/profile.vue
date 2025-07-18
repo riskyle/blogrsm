@@ -242,6 +242,7 @@ label {
 .name {
   font-size: 1.5em;
   font-weight: bold;
+  text-transform: capitalize;
 }
 
 .email {
