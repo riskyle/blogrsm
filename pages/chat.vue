@@ -109,6 +109,7 @@ onMounted(async () => {
   });
 });
 </script>
+
 <template>
   <div class="chat-container">
     <div ref="messagesContainer" class="messages-list">
@@ -118,6 +119,7 @@ onMounted(async () => {
     </div>
     <div class="input-area">
       <input
+        class="message-input"
         v-model="newMessage"
         @keyup.enter="sendMessage"
         placeholder="Type a message..."
@@ -132,15 +134,16 @@ onMounted(async () => {
 <style scoped>
 span {
   font-weight: bold;
+  margin-right: 10px;
 }
 
 .chat-container {
-  max-width: 1285px;
   margin: 0 auto;
   padding-top: 10px;
   padding-left: 10px;
   display: flex;
-  height: 81vh;
+  height: 88vh;
+  width: 100%;
   flex-direction: column;
   justify-content: end;
 }
@@ -160,13 +163,19 @@ span {
 .input-area {
   padding: 12px;
   border-top: 1px solid #eee;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  max-width: 1275px;
   display: flex;
   align-items: center;
   gap: 15px;
+  width: 100%;
+}
+
+.message-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
 }
 
 .send-icon {
@@ -188,5 +197,20 @@ input {
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 4px;
+}
+
+@media (max-width: 456px) {
+  .send-icon {
+    width: 30px;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 456px) {
+  .messages-list {
+    overflow-y: auto;
+    padding: 10px;
+  }
 }
 </style>

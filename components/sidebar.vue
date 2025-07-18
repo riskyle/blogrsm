@@ -105,6 +105,11 @@ watch(
 </template>
 
 <style scoped>
+.router-link-active {
+  color: #f6f5f7;
+  background-color: #d8b02e;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
