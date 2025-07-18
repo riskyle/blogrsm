@@ -123,18 +123,6 @@ label {
   padding-right: 0;
 }
 
-.preview {
-  padding-left: 2rem;
-  width: 100%;
-  height: 100%;
-}
-
-.preview-title {
-  width: 100%;
-  max-width: 900px;
-  margin-bottom: 1rem;
-}
-
 .form-group {
   display: flex;
   gap: 0.5rem;
@@ -145,19 +133,7 @@ label {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-}
-
-.post-button {
-  align-self: flex-end;
-  padding: 0.7rem 3rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 16px;
-  font-weight: bold;
+  margin-top: 10px;
 }
 
 .post-button:hover {
@@ -209,13 +185,14 @@ label {
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
-    padding-left: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 
   .form-container,
   .preview {
     width: 100%;
-    max-width: 100%;
+    max-width: 800px;
   }
 
   .form-container {
@@ -227,10 +204,61 @@ label {
     margin-top: 2rem;
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 426px) {
+  .post-button {
+    align-self: flex-end;
+    padding: 0.7rem 3rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
   .post-button,
   .cancel-button {
     padding: 0.7rem 2rem;
+    font-size: 14px;
+  }
+
+  .preview-title,
+  .preview {
+    display: none;
+  }
+}
+@media (min-width: 425px) {
+  .post-button {
+    align-self: flex-end;
+    padding: 0.7rem 3rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .post-button,
+  .cancel-button {
+    padding: 0.7rem 2rem;
+    font-size: 14px;
+  }
+
+  .preview {
+    padding-left: 2rem;
+    width: 100%;
+    height: 100%;
+  }
+
+  .preview-title {
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 1rem;
   }
 }
 </style>

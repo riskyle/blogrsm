@@ -162,7 +162,7 @@ label {
   margin: 0 auto;
   padding-bottom: 50px;
   padding-left: 20px;
-  padding-right: 0px;
+  padding-right: 13px;
 }
 
 @media (max-width: 1100px) {

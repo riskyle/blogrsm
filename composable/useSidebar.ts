@@ -1,17 +1,24 @@
 export const useSidebar = () => {
+    // i only used isCollapsed only
     const isCollapsed = useState('sidebar.isCollapsed', () => false)
+    
+    // and the rest of the code is not used
+    // but i will keep it here for future reference
+    const supabase = useSupabaseClient()
+    const navigateTo = useRouter().push
     const isMobile = useState('sidebar.isMobile', () => false)
 
+    // also the toggleSidebar is used
     const toggleSidebar = () => {
         isCollapsed.value = !isCollapsed.value
     }
 
     const collapseSidebar = () => {
-        isCollapsed.value = true
+        isCollapsed.value = false
     }
 
     const expandSidebar = () => {
-        isCollapsed.value = false
+        isCollapsed.value = true
     }
 
     const setMobile = (mobile: any) => {
@@ -21,7 +28,6 @@ export const useSidebar = () => {
         }
     }
 
-    // Computed properties
     const sidebarWidth = computed(() => isCollapsed.value ? '60px' : '250px')
     const shouldShowOverlay = computed(() => !isCollapsed.value && isMobile.value)
 
