@@ -57,7 +57,7 @@ onMounted(async () => {
 .blog-post {
   max-width: 1290px;
 }
-/*
+
 .post-header {
   margin-bottom: 40px;
 }
@@ -68,7 +68,6 @@ onMounted(async () => {
   border-radius: 8px;
   font-size: 1.2em;
 }
-*/
 
 .post-footer {
   font-size: 0.9em;
@@ -77,19 +76,18 @@ onMounted(async () => {
 
 @media (max-width: 500px) {
   .blog-post {
-    padding-left: 20px;
-    padding-right: 0px;
+    padding-left: 35px;
   }
 
   .post-header {
     margin-bottom: 20px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .post-content {
     padding-right: 5px;
     padding-bottom: 20px;
-    font-size: 0.5em;
+    font-size: 0.8em;
   }
 }
 
@@ -107,7 +105,7 @@ onMounted(async () => {
   .post-content {
     padding-right: 5px;
     padding-bottom: 20px;
-    font-size: 0.5em;
+    font-size: 0.9em;
   }
 }
 
@@ -116,15 +114,24 @@ onMounted(async () => {
     padding-left: 35px;
     padding-right: 5px;
   }
+
   .post-header {
     margin-bottom: 20px;
     font-size: 1em;
   }
+
   .post-content {
     padding-right: 5px;
     padding-bottom: 10px;
     white-space: wrap;
     font-size: 1.2em;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 500px) {
+  .blog-post {
+    padding-left: 55px;
+    padding-right: 5px;
   }
 }
 </style>
