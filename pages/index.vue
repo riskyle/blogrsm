@@ -28,20 +28,11 @@ const deleteBlog = async (id) => {
 };
 
 onMounted(async () => {
-  try {
-    const { data, error } = await supabase
-      .from("blogs")
-      .select("*, profiles(name)")
-      .order("created_at", { ascending: false });
+  const headers = useRequestHeaders(["cookie"]);
 
-    if (error) {
-      throw error;
-    }
+  const data = await $fetch("/api/blogs", { headers });
 
-    blogs.value = data;
-  } catch (error) {
-    console.error("Error fetching blog posts:", error);
-  }
+  blogs.value = data || [];
 });
 </script>
 
