@@ -16,11 +16,7 @@ import { ref, nextTick, watch } from "vue";
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 
-const headers = useRequestHeaders(["cookie"]);
-
-const chats = await $fetch("/api/chats", { headers });
-
-const messages = ref([...chats]);
+const messages = ref([]);
 const newMessage = ref("");
 const messagesContainer = ref(null);
 
@@ -69,6 +65,12 @@ watch(
 );
 
 onMounted(async () => {
+  const headers = useRequestHeaders(["cookie"]);
+
+  const chats = await $fetch("/api/chats", { headers });
+
+  messages.value = chats || [];
+
   scrollToBottom();
 
   const channel = await supabase
