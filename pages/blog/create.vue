@@ -10,7 +10,6 @@ definePageMeta({
   layout: "auth-layout",
 });
 
-const supabase = useSupabaseClient();
 const toast = useNuxtApp().$toast;
 
 const submitPost = async (title, content) => {
@@ -27,24 +26,23 @@ const submitPost = async (title, content) => {
 
   const id = useSupabaseUser().value?.id;
 
-  try {
-    const { data, error } = await supabase.from("blogs").insert({
-      title: title,
-      content: content,
-      slug: slug,
+  const { message, statusCode } = await $fetch("/api/blog", {
+    method: "POST",
+    body: {
+      title,
+      content,
+      slug,
       user_id: id,
-    });
+    },
+  });
 
-    if (error) {
-      throw error;
-    }
-
-    toast.success("Post created successfully!");
-    navigateTo(`/`);
-  } catch (error) {
-    console.error("Error creating post:", error);
-    toast.error("Failed to create post. Please try again.");
+  if (statusCode !== 201) {
+    toast.error(message);
+    return;
   }
+
+  toast.success(message);
+  navigateTo(`/`);
 };
 </script>
 <template>

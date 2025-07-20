@@ -25,28 +25,21 @@ const sendMessage = async () => {
     return;
   }
 
-  const id = user.value?.id;
-  const email = user.value?.email;
-  const name = user.value?.user_metadata?.name;
+  const id = user?.value.id;
+  const email = user?.value.email;
+  const name = user?.value.user_metadata.name;
 
-  try {
-    const { error } = await supabase.from("chats").insert([
-      {
-        message: newMessage.value,
-        user_id: id,
-        email: email,
-        name: name,
-      },
-    ]);
+  await $fetch("/api/chat", {
+    method: "POST",
+    body: {
+      message: newMessage.value,
+      user_id: id,
+      email: email,
+      name: name,
+    },
+  });
 
-    if (error) {
-      throw error;
-    }
-
-    newMessage.value = "";
-  } catch (error) {
-    console.error("Error sending message:", error);
-  }
+  newMessage.value = "";
 };
 
 const scrollToBottom = () => {
@@ -65,9 +58,9 @@ watch(
 );
 
 onMounted(async () => {
-  const headers = useRequestHeaders(["cookie"]);
-
-  const chats = await $fetch("/api/chats", { headers });
+  const chats = await $fetch("/api/chats", {
+    headers: useRequestHeaders(["cookie"]),
+  });
 
   messages.value = chats || [];
 

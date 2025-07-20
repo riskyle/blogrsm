@@ -19,7 +19,7 @@ export const useUserUpdate = () => {
         } catch (error: any) {
             console.error("Error updating user:", error);
         }
-    }
+    };
 
     const updateUserPassword = async (password: string) => {
         const response = await verifyUserPassword(password);

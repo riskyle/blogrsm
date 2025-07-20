@@ -43,13 +43,12 @@ const handleCancel = () => {
   content.value = "";
 };
 
-onMounted(async () => {
-  const blogPost = await props.fetch;
-  if (blogPost) {
-    title.value = blogPost.data?.title;
-    content.value = blogPost.data?.content;
-  }
-});
+const blogPost = await props.fetch;
+
+if (blogPost) {
+  title.value = blogPost?.title;
+  content.value = blogPost?.content;
+}
 </script>
 
 <template>
