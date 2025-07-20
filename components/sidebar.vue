@@ -6,8 +6,8 @@ import { ref, onMounted } from "vue";
 
 const { isCollapsed, collapseSidebar } = useSidebar();
 
-const supabase = useSupabaseClient();
 const toast: any = useNuxtApp().$toast;
+const supabaseUser = useSupabaseUser();
 
 const user = ref<User | null>(null);
 const trigger = ref(window?.innerWidth <= 425);
@@ -17,16 +17,17 @@ const comingSoon = () => {
 };
 
 onMounted(async () => {
-  const { data, error } = await supabase.auth.getUser();
-  if (error) {
-    console.error("Error fetching user:", error);
+  const data = await supabaseUser.value;
+
+  if (!data) {
+    console.error("Error fetching user: User not found.");
   } else {
-    user.value = data.user.user_metadata as any;
+    user.value = data.user_metadata as any;
   }
 });
 
 watch(
-  () => useSupabaseUser().value,
+  () => supabaseUser.value,
   (newUser) => {
     if (newUser) {
       user.value = newUser.user_metadata as User;

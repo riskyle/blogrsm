@@ -13,14 +13,12 @@ const props = defineProps({
 dayjs.extend(relativeTime);
 
 const user = useSupabaseUser();
-const supabase = useSupabaseClient();
 const toast = useNuxtApp().$toast;
 
-const blogId = ref(null);
+const slug = ref(null);
 const showConfirm = ref(false);
 const message = ref("Are you sure you want to delete this item?");
 
-const blogs = ref([...props.blogs]);
 const openDropdowns = ref({});
 const dropdownRefs = ref([]);
 
@@ -32,7 +30,7 @@ const dateTimeFormat = (date) => {
 
 const confirmDelete = async () => {
   showConfirm.value = false;
-  emit("deleteBlog", blogId.value);
+  emit("deleteBlog", slug.value);
   toast.success("Blog post deleted successfully!");
 };
 
@@ -40,8 +38,8 @@ const cancelDelete = () => {
   showConfirm.value = false;
 };
 
-const uSureToDelete = async (id, title) => {
-  blogId.value = id;
+const uSureToDelete = async (_slug, title) => {
+  slug.value = _slug;
   message.value = `Are you sure you want to delete this ${title} blog?`;
   showConfirm.value = true;
 };
@@ -135,7 +133,7 @@ onUnmounted(() => {
               </button>
               <button
                 class="delete"
-                @click="uSureToDelete(blog.id, blog.title)"
+                @click="uSureToDelete(blog.slug, blog.title)"
                 v-if="isAuthor(blog.user_id)"
               >
                 Delete

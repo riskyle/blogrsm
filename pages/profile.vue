@@ -18,12 +18,12 @@ import defaultImg from "~/assets/img/default.jpg";
 const { updateUserInfo, updateUserPassword } = useUserUpdate();
 const { deleteSelf, getLoginMethod } = useAuth();
 
-const user = useSupabaseUser().value;
 const toast = useNuxtApp().$toast;
+const user = useSupabaseUser();
 
-const name = ref(user?.user_metadata?.name || "");
-const avatar = ref(user?.user_metadata?.avatar_url || defaultImg);
-const email = ref(user?.user_metadata?.email || "");
+const name = ref(user.value.user_metadata.name || "");
+const avatar = ref(user.value.user_metadata.avatar_url || defaultImg);
+const email = ref(user.value.email || "");
 const method = ref(getLoginMethod());
 
 const currentPassword = ref("");

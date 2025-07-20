@@ -13,22 +13,19 @@ definePageMeta({
 
 import { onMounted } from "vue";
 
-const supabase = useSupabaseClient();
 const router = useRouter();
 
 const blogPost = ref(null);
 
 onMounted(async () => {
-  const { data, error } = await supabase
-    .from("blogs")
-    .select("*, profiles(name)")
-    .eq("slug", router.currentRoute.value.params.slug)
-    .single();
+  const data = await $fetch(
+    `/api/blog/${router.currentRoute.value.params.slug}`,
+    {
+      headers: useRequestHeaders(["cookie"]),
+    }
+  );
 
-  if (error) {
-    console.error("Error fetching blog post:", error);
-    return;
-  }
+  console.log(data);
 
   blogPost.value = data;
 });

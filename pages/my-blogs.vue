@@ -14,24 +14,13 @@ definePageMeta({
 });
 
 const blogs = ref([]);
-const supabase = useSupabaseClient();
 
 onMounted(async () => {
-  try {
-    const { data, error } = await supabase
-      .from("blogs")
-      .select("*, profiles(name)")
-      .eq("user_id", useSupabaseUser().value?.id)
-      .order("created_at", { ascending: false });
+  const data = await $fetch(`/api/blogs/${useSupabaseUser().value?.id}`, {
+    headers: useRequestHeaders(["cookie"]),
+  });
 
-    if (error) {
-      throw error;
-    }
-
-    blogs.value = data;
-  } catch (error) {
-    console.error("Error fetching blog posts:", error);
-  }
+  blogs.value = data;
 });
 </script>
 

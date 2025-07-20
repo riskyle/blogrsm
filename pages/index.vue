@@ -11,20 +11,15 @@ definePageMeta({
   layout: "auth-layout",
 });
 
-const supabase = useSupabaseClient();
-
 const blogs = ref([]);
 
-const deleteBlog = async (id) => {
-  try {
-    const { error } = await supabase.from("blogs").delete().eq("id", id);
-    if (error) {
-      throw error;
-    }
-    blogs.value = blogs.value.filter((blog) => blog.id !== id);
-  } catch (error) {
-    console.error("Error deleting blog post:", error);
-  }
+const deleteBlog = async (slug) => {
+  await $fetch(`/api/blog/${slug}`, {
+    method: "DELETE",
+    headers: useRequestHeaders(["cookie"]),
+  });
+
+  blogs.value = blogs.value.filter((blog) => blog.slug !== slug);
 };
 
 onMounted(async () => {

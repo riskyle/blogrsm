@@ -11,7 +11,6 @@ definePageMeta({
 });
 
 const route = useRoute();
-const supabase = useSupabaseClient();
 const toast = useNuxtApp().$toast;
 const slug = ref(route.params.slug);
 
@@ -22,21 +21,21 @@ const handleUpdateBlog = async (title, content) => {
   }
 
   try {
-    const { data, error } = await supabase
-      .from("blogs")
-      .update({
-        title: title,
-        content: content,
+    const { message, statusCode } = await $fetch(`/api/blog/${slug.value}`, {
+      method: "PUT",
+      body: {
+        title,
+        content,
         slug: title
           .replace(/[^a-zA-Z0-9\s]/g, "")
           .replace(/\s+/g, "-")
           .toLowerCase()
           .replace(/^-+|-+$/g, ""),
-      })
-      .eq("slug", slug.value);
+      },
+    });
 
-    if (error) {
-      throw error;
+    if (statusCode !== 200) {
+      throw new Error(message || "Failed to update blog post.");
     }
 
     toast.success("Blog post updated successfully!");
@@ -47,11 +46,9 @@ const handleUpdateBlog = async (title, content) => {
 };
 
 const getBlogPost = async () => {
-  return await supabase
-    .from("blogs")
-    .select("title, content, user_id")
-    .eq("slug", slug.value)
-    .single();
+  return await $fetch(`/api/blog/${slug.value}`, {
+    headers: useRequestHeaders(["cookie"]),
+  });
 };
 </script>
 <template>
