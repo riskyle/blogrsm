@@ -1,10 +1,7 @@
-<template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
-</template>
+<script setup lang="ts">
+import { Toaster } from "@/components/ui/sonner";
+import "vue-sonner/style.css";
 
-<script setup>
 useHead({
   meta: [{ name: "viewport", content: "width=device-width, initial-scale=1" }],
   link: [{ rel: "icon", href: "favicon.ico" }],
@@ -23,3 +20,10 @@ useSeoMeta({
   ogDescription: description,
 });
 </script>
+
+<template>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+  <Toaster position="top-center" />
+</template>

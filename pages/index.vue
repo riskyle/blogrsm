@@ -32,5 +32,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <blog-post :blogs="blogs" @deleteBlog="deleteBlog" />
+  <div
+    class="flex flex-col gap-1 mx-8 max-[1050px]:mx-10 min-[501px]:max-[769px]:mx-1 max-[500px]:mx-0 my-2"
+  >
+    <blog-post :blogs="blogs" @deleteBlog="deleteBlog" />
+  </div>
 </template>
