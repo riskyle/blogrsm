@@ -6,12 +6,7 @@ export default defineEventHandler(async (event: any) => {
     const body = await readBody(event)
 
     try {
-        const { error } = await supabase.from("blogs").insert({
-            title: body.title,
-            content: body.content,
-            slug: body.slug,
-            user_id: body.user_id,
-        });
+        const { error } = await supabase.from("blogs").insert(body);
 
         if (error) {
             throw error;

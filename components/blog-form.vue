@@ -36,8 +36,6 @@ const content = ref("");
 const emit = defineEmits(["submit"]);
 
 const handleSubmit = () => {
-  alert(title.value);
-  alert(content.value);
   emit("submit", title.value, content.value);
 };
 
@@ -68,7 +66,7 @@ if (blogPost) {
         <tiptap-editor v-model="content" :show-output="false" />
       </div>
     </div>
-    <div class="flex justify-end gap-3">
+    <div class="flex justify-end gap-3 mb-10">
       <Button class="bg-red-500" type="button" @click="handleCancel">
         Cancel
       </Button>

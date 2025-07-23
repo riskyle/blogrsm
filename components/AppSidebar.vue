@@ -50,9 +50,9 @@ watch(
 
 const data = {
   user: {
-    name: user.value?.name,
-    email: user.value?.email,
-    avatar: user.value?.avatar_url,
+    name: user.value?.name || "",
+    email: user.value?.email || "",
+    avatar: user.value?.avatar_url || "",
   },
   navs: [
     {

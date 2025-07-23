@@ -16,6 +16,7 @@ const props = defineProps({
   blogs: {
     required: false,
     type: Array as () => {
+      user_id: string;
       id: string;
       title: string;
       content: string;
@@ -80,12 +81,19 @@ const stripHtml = (html: string) => {
                 <dropdown-menu-item class="cursor-pointer"
                   >Read</dropdown-menu-item
                 >
-                <dropdown-menu-item class="cursor-pointer"
-                  >Edit</dropdown-menu-item
+                <dropdown-menu-item
+                  v-if="isAuthor(blog.user_id)"
+                  @click="navigateTo(`/blog/edit/${blog.slug}`)"
+                  class="cursor-pointer"
                 >
-                <dropdown-menu-item class="cursor-pointer"
-                  >Delete</dropdown-menu-item
+                  Edit
+                </dropdown-menu-item>
+                <dropdown-menu-item
+                  v-if="isAuthor(blog.user_id)"
+                  class="cursor-pointer"
                 >
+                  Delete
+                </dropdown-menu-item>
               </dropdown-menu-content>
             </dropdown-menu>
           </card-header>
