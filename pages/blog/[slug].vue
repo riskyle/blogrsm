@@ -7,8 +7,7 @@ definePageMeta({
       content: "Read our latest blog posts and updates.",
     },
   ],
-  middleware: "auth",
-  layout: "auth-layout",
+  middleware: "layout",
 });
 
 import { onMounted } from "vue";
@@ -25,24 +24,27 @@ onMounted(async () => {
     }
   );
 
-  console.log(data);
-
   blogPost.value = data;
 });
 </script>
 
 <template>
-  <div class="blog-post" v-if="blogPost">
-    <div class="post-header">
-      <h1>{{ blogPost?.title }}</h1>
+  <div class="max-w-6xl px-10 py-5 max-[768px]:px-3" v-if="blogPost">
+    <div class="">
+      <p class="font-bold text-3xl max-[768px]:text-2xl">
+        {{ blogPost?.title }}
+      </p>
     </div>
 
-    <div class="post-content">
-      <div v-html="blogPost?.content"></div>
+    <div class="">
+      <div
+        class="content text-xl max-[768px]:text-sm"
+        v-html="blogPost?.content"
+      ></div>
     </div>
 
     <footer>
-      <div class="post-footer">
+      <div class="">
         <p>Posted by: {{ blogPost?.profiles?.name }}</p>
         <p>On: {{ new Date(blogPost?.created_at).toLocaleDateString() }}</p>
       </div>
@@ -50,85 +52,102 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
-.blog-post {
-  max-width: 1290px;
+<style>
+h1 {
+  font-size: revert;
+  font-weight: revert;
 }
 
-.post-header {
-  margin-bottom: 40px;
+.content * {
+  all: revert;
+  font-size: revert;
+  font-weight: revert;
+  font-family: revert;
+  line-height: revert;
+  color: inherit;
+  background: transparent;
+  text-decoration: revert;
+  margin: revert;
+  padding: revert;
+  border: revert;
+  list-style: revert;
+  vertical-align: revert;
+  box-sizing: border-box;
 }
 
-.post-content {
-  padding-right: 50px;
-  padding-bottom: 30px;
-  border-radius: 8px;
-  font-size: 1.2em;
+.content ol,
+.content ul,
+.content menu {
+  padding-left: revert;
 }
 
-.post-footer {
-  font-size: 0.9em;
-  color: #666;
+.content img,
+.content video {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-@media (max-width: 500px) {
-  .blog-post {
-    padding-left: 35px;
-  }
-
-  .post-header {
-    margin-bottom: 20px;
-    font-size: 12px;
-  }
-
-  .post-content {
-    padding-right: 5px;
-    padding-bottom: 20px;
-    font-size: 0.8em;
-  }
+.content table {
+  border-collapse: collapse;
+  text-indent: 0;
+  border-color: inherit;
 }
 
-@media (min-width: 500px) {
-  .blog-post {
-    padding-left: 30px;
-    padding-right: 0px;
-  }
-
-  .post-header {
-    margin-bottom: 20px;
-    font-size: 10px;
-  }
-
-  .post-content {
-    padding-right: 5px;
-    padding-bottom: 20px;
-    font-size: 0.9em;
-  }
+.content b,
+.content strong {
+  font-weight: bolder;
 }
 
-@media (min-width: 768px) {
-  .blog-post {
-    padding-left: 35px;
-    padding-right: 5px;
-  }
-
-  .post-header {
-    margin-bottom: 20px;
-    font-size: 1em;
-  }
-
-  .post-content {
-    padding-right: 5px;
-    padding-bottom: 10px;
-    white-space: wrap;
-    font-size: 1.2em;
-  }
+.content code,
+.content kbd,
+.content samp {
+  font-family: monospace;
+  font-size: 1em;
 }
 
-@media (max-width: 1100px) and (min-width: 500px) {
-  .blog-post {
-    padding-left: 55px;
-    padding-right: 5px;
-  }
+.content pre {
+  background-color: #0f0f0f;
+  color: #f8f8f2;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  overflow-x: auto;
+  font-family: "Fira Code", monospace;
+  font-size: 0.9rem;
+}
+
+.content small {
+  font-size: 80%;
+}
+
+.content a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.content sub,
+.content sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.content sub {
+  bottom: -0.25em;
+}
+
+.content sup {
+  top: -0.5em;
+}
+
+.content blockquote {
+  all: revert;
+  margin: revert;
+  padding: revert;
+  border: revert;
+  font-style: revert;
+  quotes: revert;
 }
 </style>

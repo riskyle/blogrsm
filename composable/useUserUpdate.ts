@@ -23,7 +23,6 @@ export const useUserUpdate = () => {
 
     const updateUserPassword = async (password: string) => {
         const response = await verifyUserPassword(password);
-        console.log(response);
 
         // try {
         //     const { data, error } = await client.auth.updateUser({

@@ -19,6 +19,15 @@ const user = useSupabaseUser();
 const messages = ref([]);
 const newMessage = ref("");
 const messagesContainer = ref(null);
+const scrollTarget = ref(null);
+
+const scrollToBottom = async () => {
+  await nextTick();
+  messagesContainer.value?.scrollIntoView({
+    behavior: "smooth",
+    block: "end",
+  });
+};
 
 const sendMessage = async () => {
   if (!newMessage.value.trim()) {
@@ -42,16 +51,15 @@ const sendMessage = async () => {
   newMessage.value = "";
 };
 
-const scrollToBottom = () => {
-  if (messagesContainer.value) {
-    messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
-  }
-};
+// const scrollToBottom = () => {
+//   if (messagesContainer.value) {
+//     messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
+//   }
+// };
 
 watch(
   messages,
   async () => {
-    await nextTick();
     scrollToBottom();
   },
   { deep: true }
@@ -62,9 +70,9 @@ onMounted(async () => {
     headers: useRequestHeaders(["cookie"]),
   });
 
-  messages.value = chats || [];
+  messages.value = chats.reverse() || [];
 
-  scrollToBottom();
+  await scrollToBottom();
 
   const channel = await supabase
     .channel("chats")
@@ -89,119 +97,33 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="chat-container">
-    <div ref="messagesContainer" class="messages-list">
-      <div v-for="message in messages" :key="message.id" class="message">
+  <div class="flex flex-col">
+    <div ref="messagesContainer" class="h-max w-full pl-5 overflow-y-auto">
+      <div class="pb-3" v-for="message in messages" :key="message.id">
         <span>User:</span> {{ message.message }}
       </div>
     </div>
-    <div class="input-area">
+
+    <div
+      class="flex items-center gap-5 sticky bottom-0 border p-5 bg-white dark:bg-gray-700 h-auto"
+    >
       <input
-        class="message-input"
+        class="w-full bg-gray-400 dark:bg-black rounded-2xl h-10 px-5 align-middle"
         v-model="newMessage"
         @keyup.enter="sendMessage"
         placeholder="Type a message..."
       />
-      <button class="send-button" @click="sendMessage">
-        <img class="send-icon" src="../assets/icons/send-icon.svg" alt="Send" />
+      <button
+        class="dark:bg-white rounded-sm p-1 cursor-pointer"
+        @click="sendMessage"
+      >
+        <NuxtImg
+          src="/icons/send-icon.svg"
+          width="30"
+          height="30"
+          alt="image"
+        />
       </button>
     </div>
   </div>
 </template>
-
-<style scoped>
-span {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.chat-container {
-  margin: 0 auto;
-  padding-top: 10px;
-  padding-left: 5px;
-  display: flex;
-  height: 88vh;
-  width: 100%;
-  flex-direction: column;
-  justify-content: end;
-}
-
-.messages-list {
-  overflow-y: auto;
-  padding: 0px;
-}
-
-.message {
-  margin-bottom: 10px;
-  padding: 8px;
-  padding-left: 20px;
-  border-radius: 4px;
-}
-
-.input-area {
-  padding: 12px;
-  border-top: 1px solid #eee;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  width: 100%;
-}
-
-.message-input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  width: 100%;
-}
-
-.send-icon {
-  width: 40px;
-  cursor: pointer;
-}
-
-.send-button {
-  background-color: transparent;
-  border: none;
-  border-radius: 4px;
-  padding: 2px 13px;
-  cursor: pointer;
-}
-
-input {
-  width: 100%;
-  max-width: 1200px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-input:focus,
-textarea:focus {
-  scroll-margin-top: 100px;
-  scroll-margin-bottom: 100px;
-}
-
-.form-container {
-  padding-bottom: 300px;
-}
-
-@media (max-width: 1099px) {
-  .chat-container {
-    padding-left: 40px;
-  }
-}
-
-@media (max-width: 500px) {
-  .send-icon {
-    width: 30px;
-    cursor: pointer;
-    vertical-align: middle;
-  }
-
-  .chat-container {
-    padding-left: 25px;
-  }
-}
-</style>

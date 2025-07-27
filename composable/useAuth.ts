@@ -23,6 +23,7 @@ export const useAuth = () => {
             return { data, error };
         } catch (error: any) {
             console.error("Error signing up:", error);
+            return { error }
         }
     }
 
