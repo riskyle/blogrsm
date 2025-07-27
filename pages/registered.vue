@@ -1,17 +1,3 @@
-<script setup>
-const user = useSupabaseUser();
-
-watch(
-  user,
-  () => {
-    if (!!user.value == false) {
-      return navigateTo("/login");
-    }
-  },
-  { immediate: true }
-);
-</script>
-
 <template>
   <div
     class="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10"
@@ -19,10 +5,10 @@ watch(
     <div class="flex flex-col w-full max-w-sm gap-6">
       <card>
         <card-header class="flex justify-center">
-          <img class="h-16 w-16" src="../assets/img/check.png" />
+          <img class="h-14 w-14" src="../assets/img/check.png" />
         </card-header>
         <card-content>
-          <p class="text-center text-md">
+          <p class="text-center text-sm">
             Registered successfully, kindly go to your email for your
             confirmation.
           </p>
