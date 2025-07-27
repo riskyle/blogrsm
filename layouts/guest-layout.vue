@@ -10,6 +10,7 @@ import Button from "~/components/ui/button/Button.vue";
     <div class="flex flex-row items-center">
       <p class="text-2xl uppercase font-bold max-md:hidden">Blochat</p>
     </div>
+
     <div class="flex gap-3 items-center">
       <nuxt-link to="/">
         <Home
@@ -23,6 +24,7 @@ import Button from "~/components/ui/button/Button.vue";
       <nuxt-link to="register">
         <Button class="cursor-pointer"> Sign Up </Button>
       </nuxt-link>
+      <mode />
     </div>
   </header>
   <slot />
