@@ -3,22 +3,10 @@ import Button from "./ui/button/Button.vue";
 import Input from "./ui/input/Input.vue";
 import Label from "./ui/label/Label.vue";
 
-definePageMeta({
-  title: "Create a New Post",
-  meta: [
-    {
-      name: "description",
-      content: "Create a new blog post with a title and content.",
-    },
-  ],
-  middleware: "auth",
-  layout: "auth-layout",
-});
-
 const props = defineProps({
   fetch: {
     type: Promise,
-    required: true,
+    required: false,
   },
   header: {
     type: String,
@@ -67,10 +55,14 @@ if (blogPost) {
       </div>
     </div>
     <div class="flex justify-end gap-3 mb-10">
-      <Button class="bg-red-500" type="button" @click="handleCancel">
+      <Button
+        class="bg-red-500 cursor-pointer"
+        type="button"
+        @click="handleCancel"
+      >
         Cancel
       </Button>
-      <Button class="" @click="handleSubmit">
+      <Button class="cursor-pointer" @click="handleSubmit">
         {{ props.button }}
       </Button>
     </div>

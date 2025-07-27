@@ -7,8 +7,7 @@ definePageMeta({
       content: "Read our latest blog posts and updates.",
     },
   ],
-  middleware: "auth",
-  layout: "auth-layout",
+  middleware: "layout",
 });
 
 import { onMounted } from "vue";
@@ -24,8 +23,6 @@ onMounted(async () => {
       headers: useRequestHeaders(["cookie"]),
     }
   );
-
-  console.log(data);
 
   blogPost.value = data;
 });

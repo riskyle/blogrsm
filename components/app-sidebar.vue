@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import type { SidebarProps } from "@/components/ui/sidebar";
 
-import { Group, Newspaper, Blocks } from "lucide-vue-next";
-import NavMain from "@/components/NavMain.vue";
-import NavUser from "@/components/NavUser.vue";
+import {
+  Group,
+  Newspaper,
+  Blocks,
+  MessageCircle,
+  BadgePlus,
+} from "lucide-vue-next";
+import NavMain from "~/components/nav-main.vue";
+import NavUser from "~/components/nav-user.vue";
 
 import {
   Sidebar,
@@ -63,12 +69,12 @@ const data = {
     {
       name: "New Blog",
       url: "/blog/create",
-      icon: Newspaper,
+      icon: BadgePlus,
     },
     {
       name: "Chat",
       url: "/chat",
-      icon: Group,
+      icon: MessageCircle,
     },
   ],
 };

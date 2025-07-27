@@ -7,6 +7,7 @@ definePageMeta({
       content: "Login to your account to access exclusive features.",
     },
   ],
+  layout: "guest-layout",
   middleware: "auth",
 });
 
@@ -15,6 +16,7 @@ import { useAuth } from "~/composable/useAuth";
 import { toast } from "vue-sonner";
 
 const { signInWithPassword, loginWithGoogle, loginWithFacebook } = useAuth();
+const user = useSupabaseUser();
 
 const loading = ref(false);
 

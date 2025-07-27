@@ -15,8 +15,8 @@ export default defineEventHandler(async (event) => {
     const { data, error } = await supabase
         .from('chats')
         .select('message, created_at, id')
-        .order('created_at', { ascending: true })
-        .limit(50);
+        .range(0, 20)
+        .order('created_at', { ascending: false });
 
     if (error) {
         throw createError({

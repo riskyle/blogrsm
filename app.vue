@@ -10,9 +10,8 @@ useHead({
   },
 });
 
-const title = "BloChaTod - A Blog Application with Todo and Chat Features";
-const description =
-  "A blog application that mixed with todo and chat features.";
+const title = "BloChat- A Blog Application with Chat Features";
+const description = "A blog application that with chat features.";
 useSeoMeta({
   title,
   ogTitle: title,

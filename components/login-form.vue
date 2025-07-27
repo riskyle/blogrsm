@@ -20,8 +20,8 @@ const props = defineProps({
   },
 });
 
-const email = ref("");
-const pwd = ref("");
+const email = ref<any>("");
+const pwd = ref<any>("");
 
 const emit = defineEmits([
   "sign-in-with-facebook",

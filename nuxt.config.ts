@@ -13,8 +13,7 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/login',
       callback: '/auth/callback',
-      exclude: ['/register', '/login', '/confirm-email'],
-      include: ['/'],
+      exclude: ['/register', '/registered', '/login', '/confirm-email', '/', '/blog/**'],
     },
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_ANON_KEY,
@@ -42,7 +41,10 @@ export default defineNuxtConfig({
      */
     componentDir: './components/ui'
   },
-  css: ['~/assets/css/tailwind.css'],
+  plugins: [
+    { src: '~/plugins/leaflet.client.js', mode: 'client' }
+  ],
+  css: ['~/assets/css/tailwind.css', 'leaflet/dist/leaflet.css'],
   vite: {
     plugins: [
       tailwindcss(),

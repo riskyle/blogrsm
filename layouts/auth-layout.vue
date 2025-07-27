@@ -5,21 +5,11 @@ export const containerClass = "w-full h-full";
 </script>
 
 <script setup lang="ts">
-import AppSidebar from "@/components/AppSidebar.vue";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
+import AppSidebar from "~/components/app-sidebar.vue";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-  useSidebar,
 } from "@/components/ui/sidebar";
 </script>
 
@@ -28,7 +18,7 @@ import {
     <AppSidebar />
     <SidebarInset>
       <header
-        class="sticky top-0 z-10 bg-gray-100 dark:bg-gray-800 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16"
+        class="sticky top-0 z-10 bg-gray-100 dark:bg-gray-800 flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16"
       >
         <div class="flex flex-row items-center gap-2">
           <SidebarTrigger
@@ -37,8 +27,11 @@ import {
           <p
             class="text-2xl uppercase font-bold max-[426px]:text-xl min-[1050px]:ml-4"
           >
-            Blochatod
+            Blochat
           </p>
+        </div>
+        <div class="pr-4">
+          <mode />
         </div>
       </header>
       <slot />

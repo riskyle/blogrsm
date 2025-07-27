@@ -3,10 +3,7 @@ import {
   Bold,
   Code,
   Code2,
-  CornerDownLeft,
-  CornerDownLeftIcon,
   Ellipsis,
-  Eraser,
   Heading1,
   Heading2,
   Heading3,
@@ -15,15 +12,9 @@ import {
   Link,
   List,
   ListOrdered,
-  Minus,
   Quote,
-  Redo,
-  Redo2,
   Strikethrough,
   Type,
-  Undo,
-  Undo2,
-  X,
 } from "lucide-vue-next";
 import { useEditor } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
@@ -371,7 +362,7 @@ onBeforeUnmount(() => {
     </div>
 
     <!-- Editor Content Area -->
-    <div class="bg-white dark:bg-inherit">
+    <div class="bg-white dark:bg-inherit pb-2">
       <TiptapEditorContent
         :editor="editor"
         class="min-h-46 max-h-126 overflow-auto p-6 prose prose-sm max-w-2xl focus:outline-none"

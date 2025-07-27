@@ -1,4 +1,6 @@
 <script setup>
+import { toast } from "vue-sonner";
+
 definePageMeta({
   title: "Create Blog Post",
   meta: [
@@ -7,11 +9,11 @@ definePageMeta({
       content: "Create a new blog post with our easy-to-use editor.",
     },
   ],
+  middleware: "auth",
   layout: "auth-layout",
 });
 
 const route = useRoute();
-const toast = useNuxtApp().$toast;
 const slug = ref(route.params.slug);
 
 const handleUpdateBlog = async (title, content) => {

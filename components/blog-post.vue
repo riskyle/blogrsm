@@ -1,5 +1,17 @@
 <script setup lang="ts">
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -33,19 +45,14 @@ dayjs.extend(relativeTime);
 
 const user = useSupabaseUser();
 
-const slug = ref(null);
-const showConfirm = ref(false);
-const message = ref("Are you sure you want to delete this item?");
-
 const emit = defineEmits(["deleteBlog"]);
 
 const dateTimeFormat = (date: any) => {
   return dayjs(date).fromNow();
 };
 
-const confirmDelete = async () => {
-  showConfirm.value = false;
-  emit("deleteBlog", slug.value);
+const confirmDelete = async (slug: string) => {
+  emit("deleteBlog", slug);
 };
 
 const isAuthor = (authorId: string) => {
@@ -64,10 +71,10 @@ const stripHtml = (html: string) => {
     <div v-for="blog in blogs" :key="blog.id">
       <Separator class="max-w-3xl my-0.5" />
       <card
-        class="max-[1050px]:max-w-full max-w-3xl py-1 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-200 border-0 shadow-white"
+        class="max-[800px]:max-w-2xl max-[700px]:max-w-md max-[600px]:max-w-lg max-[500px]:max-w-md max-[445px]:max-w-sm max-[400px]:max-w-[390px] max-[321px]:max-w-[300px] max-w-3xl py-1 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-200 border-0"
       >
         <nuxt-link :to="`blog/${blog.slug}`">
-          <card-header class="flex items-center max-[426px]:px-4">
+          <card-header class="flex items-center max-[426px]:px-4 px-3">
             <p class="text-sm capitalize">{{ blog.profiles.name }}</p>
             <span>&middot; </span>
             <p class="flex-1 text-sm text-muted-foreground">
@@ -78,7 +85,9 @@ const stripHtml = (html: string) => {
                 <ellipsis class="w-4 h-4" />
               </dropdown-menu-trigger>
               <dropdown-menu-content>
-                <dropdown-menu-item class="cursor-pointer"
+                <dropdown-menu-item
+                  class="cursor-pointer"
+                  @click="navigateTo(`/blog/${blog.slug}`)"
                   >Read</dropdown-menu-item
                 >
                 <dropdown-menu-item
@@ -88,17 +97,40 @@ const stripHtml = (html: string) => {
                 >
                   Edit
                 </dropdown-menu-item>
-                <dropdown-menu-item
-                  v-if="isAuthor(blog.user_id)"
-                  class="cursor-pointer"
-                >
-                  Delete
-                </dropdown-menu-item>
+
+                <AlertDialog v-if="isAuthor(blog.user_id)">
+                  <AlertDialogTrigger
+                    class="pl-2 pr-18 py-1 align-middle text-sm rounded-sm hover:bg-accent focus:bg-accent focus:text-accent-foreground cursor-pointer"
+                    >Delete</AlertDialogTrigger
+                  >
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle
+                        >Are you absolutely sure?</AlertDialogTitle
+                      >
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove your data from our
+                        servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel class="cursor-pointer"
+                        >Cancel</AlertDialogCancel
+                      >
+                      <AlertDialogAction
+                        @click="confirmDelete(blog.slug)"
+                        class="cursor-pointer"
+                        >Yes, I wanted to delete it</AlertDialogAction
+                      >
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </dropdown-menu-content>
             </dropdown-menu>
           </card-header>
 
-          <card-content class="mb-2 max-[426px]:px-4">
+          <card-content class="mb-2 max-[426px]:px-4 px-3">
             <p class="text-xl max-[456px]:text-[16px] font-bold mb-1">
               {{ blog.title }}
             </p>
@@ -108,14 +140,14 @@ const stripHtml = (html: string) => {
               {{ stripHtml(blog.content) }}
             </p>
           </card-content>
-          <card-footer class="flex justify-start max-[426px]:px-4">
+          <!-- <card-footer class="flex justify-start max-[426px]:px-4">
             <div
               class="flex items-center justify-center gap-1 bg-amber-500 rounded-2xl px-3 py-2 text-white"
             >
               <MessageCircle :size="16" />
               <span class="text-[13px]">4</span>
             </div>
-          </card-footer>
+          </card-footer> -->
         </nuxt-link>
       </card>
     </div>
