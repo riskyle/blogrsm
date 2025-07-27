@@ -41,10 +41,7 @@ export default defineNuxtConfig({
      */
     componentDir: './components/ui'
   },
-  plugins: [
-    { src: '~/plugins/leaflet.client.js', mode: 'client' }
-  ],
-  css: ['~/assets/css/tailwind.css', 'leaflet/dist/leaflet.css'],
+  css: ['~/assets/css/tailwind.css'],
   vite: {
     plugins: [
       tailwindcss(),
