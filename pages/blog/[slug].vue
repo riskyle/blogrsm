@@ -16,8 +16,10 @@ import type { BlogInterface } from "~/types/blog";
 const router = useRouter();
 
 const blogPost = ref<BlogInterface | null | undefined>(null);
+const loading = ref(false);
 
 onMounted(async () => {
+  loading.value = true;
   const data = await $fetch(
     `/api/blog/${router.currentRoute.value.params.slug}`,
     {
@@ -27,26 +29,27 @@ onMounted(async () => {
 
   blogPost.value = data;
 });
+loading.value = false;
 </script>
 
 <template>
-  <div class="max-w-6xl px-10 py-5 max-[768px]:px-3" v-if="blogPost">
-    <div class="">
-      <p class="font-bold text-3xl max-[768px]:text-2xl">
+  <div class="max-w-6xl px-10 py-5 max-[768px]:px-3" v-if="blogPost && loading">
+    <div class="mb-10">
+      <p class="font-bold text-4xl max-[768px]:text-2xl">
         {{ blogPost?.title }}
       </p>
     </div>
 
     <div class="">
       <div
-        class="content text-xl max-[768px]:text-sm"
+        class="content text-sm max-[768px]:text-sm"
         v-html="blogPost?.content"
       ></div>
     </div>
 
     <footer>
       <div class="">
-        <p>
+        <p class="text-md italic">
           Posted by:
           {{
             blogPost?.profiles?.is_anon === true
@@ -54,9 +57,17 @@ onMounted(async () => {
               : blogPost?.profiles?.name
           }}
         </p>
-        <p>On: {{ new Date(blogPost?.created_at).toLocaleDateString() }}</p>
+        <p class="text-sm">
+          On: {{ new Date(blogPost?.created_at).toLocaleDateString() }}
+        </p>
       </div>
     </footer>
+  </div>
+  <div v-else class="flex justify-center items-center w-full h-140">
+    <img
+      src="../../assets/img/logo.png"
+      class="w-12 h-12 animate-spin rounded-full"
+    />
   </div>
 </template>
 
