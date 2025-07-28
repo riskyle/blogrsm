@@ -36,6 +36,7 @@ const props = defineProps({
       created_at: Date;
       profiles: {
         name: string;
+        is_anon: boolean;
       };
     }[],
   },
@@ -75,7 +76,11 @@ const stripHtml = (html: string) => {
       >
         <nuxt-link :to="`blog/${blog.slug}`">
           <card-header class="flex items-center max-[426px]:px-4 px-3">
-            <p class="text-sm capitalize">{{ blog.profiles.name }}</p>
+            <p class="text-sm capitalize">
+              {{
+                blog.profiles.is_anon == true ? "Anonymous" : blog.profiles.name
+              }}
+            </p>
             <span>&middot; </span>
             <p class="flex-1 text-sm text-muted-foreground">
               {{ dateTimeFormat(blog.created_at) }}

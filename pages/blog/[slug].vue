@@ -45,7 +45,14 @@ onMounted(async () => {
 
     <footer>
       <div class="">
-        <p>Posted by: {{ blogPost?.profiles?.name }}</p>
+        <p>
+          Posted by:
+          {{
+            blogPost?.profiles?.is_anon === true
+              ? "Anonymous"
+              : blogPost?.profiles?.name
+          }}
+        </p>
         <p>On: {{ new Date(blogPost?.created_at).toLocaleDateString() }}</p>
       </div>
     </footer>

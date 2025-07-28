@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import {
   BadgeCheck,
-  Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
-  Sparkles,
+  VenetianMask,
 } from "lucide-vue-next";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -25,6 +23,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useAuth } from "~/composable/useAuth";
+import Switch from "./ui/switch/Switch.vue";
 
 const props = defineProps<{
   user: {
@@ -34,16 +33,44 @@ const props = defineProps<{
   };
 }>();
 
-const nameTwoLetters = () => {
-  if (!props.user.name) return "NN";
-  const names = props.user.name.split(" ");
-  return names.length > 1
-    ? `${names[0][0]}${names[1][0]}`.toUpperCase()
-    : names[0].substring(0, 2).toUpperCase();
-};
-
 const { signOut } = useAuth();
 const { isMobile } = useSidebar();
+
+const isAnon = ref(false);
+
+const makeAnon = async () => {
+  let is_anon = false;
+
+  if (isAnon.value === true && isAnon.value !== null) {
+    is_anon = false;
+  } else {
+    is_anon = true;
+  }
+
+  isAnon.value = is_anon;
+
+  await $fetch("/api/user/anon", {
+    headers: useRequestHeaders(["cookie"]),
+    method: "patch",
+    body: { is_anon },
+  });
+};
+
+const nameTwoLetters = () => {
+  if (!props.user.name) return "NN";
+
+  const names: string[] | undefined = props.user?.name.split(" ");
+
+  return names.length > 1
+    ? `${names[0]?.[0]}${names[1]?.[0]}`.toUpperCase()
+    : names[0]?.substring(0, 2).toUpperCase();
+};
+
+const anon: any = await $fetch("/api/user/anon", {
+  headers: useRequestHeaders(["cookie"]),
+});
+
+isAnon.value = anon?.data.is_anon;
 </script>
 
 <template>
@@ -89,6 +116,13 @@ const { isMobile } = useSidebar();
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <DropdownMenuLabel class="p-0 font-normal">
+            <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+              <Switch :model-value="isAnon" @update:model-value="makeAnon" />
+              Anonymous
+            </div>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <nuxt-link to="/profile">
               <DropdownMenuItem>
@@ -96,10 +130,6 @@ const { isMobile } = useSidebar();
                 Account
               </DropdownMenuItem>
             </nuxt-link>
-            <DropdownMenuItem>
-              <Bell />
-              Notifications
-            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem @click="signOut">
