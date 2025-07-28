@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import {
   Bold,
   Code,
@@ -36,7 +36,7 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 
-const editor = useEditor({
+const editor: any = useEditor({
   content: props.modelValue,
   extensions: [
     StarterKit,
@@ -58,7 +58,7 @@ const editor = useEditor({
   },
 });
 
-const handleImageUpload = (event) => {
+const handleImageUpload = (event: any) => {
   const file = event.target.files[0];
   if (!file) return;
 
@@ -73,8 +73,8 @@ const handleImageUpload = (event) => {
   }
 
   const reader = new FileReader();
-  reader.onload = (e) => {
-    const src = e.target.result;
+  reader.onload = (e: ProgressEvent<FileReader>) => {
+    const src: any = e.target?.result;
     if (editor.value) {
       editor.value.chain().focus().setImage({ src }).run();
     }
@@ -95,14 +95,14 @@ const addImageFromUrl = () => {
   }
 };
 
-const isValidImageUrl = (url) => {
+const isValidImageUrl = (url: string) => {
   const pattern = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|svg)(\?.*)?$/i;
   return pattern.test(url) || url.startsWith("data:image/");
 };
 
 onBeforeUnmount(() => {
   if (unref(editor)) {
-    unref(editor).destroy();
+    unref(editor)?.destroy();
   }
 });
 </script>
@@ -131,7 +131,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Bold"
             >
-              <Bold size="16" />
+              <Bold :size="16" />
             </button>
 
             <button
@@ -145,7 +145,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Italic"
             >
-              <Italic size="16" />
+              <Italic :size="16" />
             </button>
 
             <button
@@ -159,7 +159,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Strike"
             >
-              <Strikethrough size="16" />
+              <Strikethrough :size="16" />
             </button>
 
             <button
@@ -172,7 +172,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Code"
             >
-              <Code size="16" />
+              <Code :size="16" />
             </button>
           </div>
 
@@ -191,7 +191,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Paragraph"
             >
-              <Type size="16" />
+              <Type :size="16" />
             </button>
 
             <button
@@ -209,7 +209,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Heading 1"
             >
-              <Heading1 size="16" />
+              <Heading1 :size="16" />
             </button>
 
             <button
@@ -227,7 +227,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Heading 2"
             >
-              <Heading2 size="16" />
+              <Heading2 :size="16" />
             </button>
 
             <button
@@ -245,7 +245,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Heading 3"
             >
-              <Heading3 size="16" />
+              <Heading3 :size="16" />
             </button>
           </div>
 
@@ -264,7 +264,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Bullet list"
             >
-              <List size="16" />
+              <List :size="16" />
             </button>
 
             <button
@@ -278,7 +278,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Ordered list"
             >
-              <ListOrdered size="16" />
+              <ListOrdered :size="16" />
             </button>
 
             <button
@@ -292,7 +292,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Code block"
             >
-              <Code2 size="16" />
+              <Code2 :size="16" />
             </button>
 
             <button
@@ -306,7 +306,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Blockquote"
             >
-              <Quote size="16" />
+              <Quote :size="16" />
             </button>
           </div>
 
@@ -325,7 +325,7 @@ onBeforeUnmount(() => {
                 class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 text-gray-600 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 title="Insert image"
               >
-                <ImageDown size="16" />
+                <ImageDown :size="16" />
               </button>
             </div>
 
@@ -335,7 +335,7 @@ onBeforeUnmount(() => {
               class="p-2 m-1 rounded-lg transition-all duration-200 hover:bg-gray-100 text-gray-600 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               title="Insert image from URL"
             >
-              <Link size="16" />
+              <Link :size="16" />
             </button>
             <DropdownMenu>
               <DropdownMenuTrigger as-child>
@@ -343,7 +343,7 @@ onBeforeUnmount(() => {
                   class="bg-transparent border-0 text-gray cursor-pointer"
                   variant="default"
                 >
-                  <Ellipsis size="16" />
+                  <Ellipsis :size="16" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -352,7 +352,7 @@ onBeforeUnmount(() => {
                   as-child
                   class="min-[969px]:hidden"
                 >
-                  <Quote size="16" />
+                  <Quote :size="16" />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
   title: "Login",
   meta: [
@@ -20,12 +20,13 @@ const user = useSupabaseUser();
 
 const loading = ref(false);
 
-const signIn = async (email, pwd) => {
+const signIn = async (email: string, pwd: string) => {
   loading.value = true;
-  const { data, error } = await signInWithPassword({
+  const { data, error }: any = await signInWithPassword({
     email: email,
     password: pwd,
   });
+
   loading.value = false;
   if (error) {
     toast.error(error.message || "Failed to sign in. Please try again.");

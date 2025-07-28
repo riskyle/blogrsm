@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
   title: "User Profile",
   meta: [
@@ -18,20 +18,21 @@ import { toast } from "vue-sonner";
 import Label from "~/components/ui/label/Label.vue";
 import Input from "~/components/ui/input/Input.vue";
 import Button from "~/components/ui/button/Button.vue";
+import type { User } from "@supabase/supabase-js";
 
 const { updateUserInfo, updateUserPassword } = useUserUpdate();
 const { deleteSelf, getLoginMethod } = useAuth();
 
-const user = useSupabaseUser();
+const user: Ref<User | null> = useSupabaseUser();
 
-const name = ref(user.value.user_metadata.name || "");
-const avatar = ref(user.value.user_metadata.avatar_url || defaultImg);
-const email = ref(user.value.email || "");
+const name = ref(user.value?.user_metadata.name || "");
+const avatar = ref(user.value?.user_metadata.avatar_url || defaultImg);
+const email = ref(user.value?.email || "");
 const method = ref(getLoginMethod());
 
-const currentPassword = ref("");
-const newPassword = ref("");
-const confirmPassword = ref("");
+const currentPassword = ref<string>("");
+const newPassword = ref<string>("");
+const confirmPassword = ref<string>("");
 
 const updateInfo = async () => {
   await updateUserInfo({
@@ -59,7 +60,7 @@ const changePassword = async () => {
   <div class="flex flex-col p-10 max-md:p-5 gap-7">
     <div>
       <p class="font-bold text-3xl mb-3">User Profile</p>
-      <p class="font-thin text-sm">{{ userData?.bio || "No Bio Available" }}</p>
+      <p class="font-thin text-sm">No Bio Available</p>
     </div>
     <card>
       <card-header class="flex flex-row items-center">

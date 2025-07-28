@@ -1,17 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useColorMode } from "@vueuse/core";
 
 const colorMode = useColorMode();
 
-const setColorMode = (mode) => {
+const setColorMode = () => {
   if (colorMode.value === "dark") {
     colorMode.value = "light";
   } else {
@@ -24,7 +18,7 @@ const setColorMode = (mode) => {
   <Button
     class="cursor-pointer border-0 bg-inherit"
     variant="outline"
-    @click="setColorMode()"
+    @click="setColorMode"
   >
     <Icon
       icon="radix-icons:moon"

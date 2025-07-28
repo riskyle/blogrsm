@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
     if (error) {
         console.error("Error fetching blogs:", error);
-        return createError({ statusCode: 500, statusMessage: "Internal Server Error" });
+        createError({ statusCode: 500, statusMessage: "Internal Server Error" });
     }
 
     return data?.map((row: BlogInterface) => row.profiles.is_anon == true ? {

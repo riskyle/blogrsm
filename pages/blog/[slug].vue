@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
   title: "Blog Post",
   meta: [
@@ -11,10 +11,11 @@ definePageMeta({
 });
 
 import { onMounted } from "vue";
+import type { BlogInterface } from "~/types/blog";
 
 const router = useRouter();
 
-const blogPost = ref(null);
+const blogPost = ref<BlogInterface | null | undefined>(null);
 
 onMounted(async () => {
   const data = await $fetch(

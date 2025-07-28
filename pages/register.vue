@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
   title: "Register",
   meta: [
@@ -17,7 +17,12 @@ const { register, loginWithGoogle, loginWithFacebook } = useAuth();
 
 const loading = ref(false);
 
-const signUp = async (name, email, pwd, confirmPwd) => {
+const signUp = async (
+  name: string,
+  email: string,
+  pwd: string,
+  confirmPwd: string
+) => {
   if (!name || !email || !pwd || !confirmPwd) {
     toast.error("All fields are required.");
     return;
@@ -75,7 +80,6 @@ const signInWithFacebook = () => {
 
 <template>
   <div
-    v-if="!isRegistered"
     class="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10"
   >
     <div class="flex w-full max-w-sm flex-col gap-6">

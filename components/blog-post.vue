@@ -23,22 +23,12 @@ import Separator from "./ui/separator/Separator.vue";
 import { Ellipsis, MessageCircle } from "lucide-vue-next";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import type { BlogInterface } from "~/types/blog";
 
 const props = defineProps({
   blogs: {
     required: false,
-    type: Array as () => {
-      user_id: string;
-      id: string;
-      title: string;
-      content: string;
-      slug: string;
-      created_at: Date;
-      profiles: {
-        name: string;
-        is_anon: boolean;
-      };
-    }[],
+    type: Array as () => BlogInterface[],
   },
 });
 

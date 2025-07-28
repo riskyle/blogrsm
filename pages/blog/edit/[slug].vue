@@ -1,5 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { toast } from "vue-sonner";
+import type { BlogInterface } from "~/types/blog";
 
 definePageMeta({
   title: "Create Blog Post",
@@ -16,7 +17,7 @@ definePageMeta({
 const route = useRoute();
 const slug = ref(route.params.slug);
 
-const handleUpdateBlog = async (title, content) => {
+const handleUpdateBlog = async (title: string, content: string) => {
   if (!title || !content) {
     toast.error("Title and content cannot be empty.");
     return;
@@ -41,13 +42,13 @@ const handleUpdateBlog = async (title, content) => {
     }
 
     toast.success("Blog post updated successfully!");
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error updating blog post:", error);
     toast.error(error.message || "Failed to update blog post.");
   }
 };
 
-const getBlogPost = async () => {
+const getBlogPost = async (): Promise<any> => {
   return await $fetch(`/api/blog/${slug.value}`, {
     headers: useRequestHeaders(["cookie"]),
   });

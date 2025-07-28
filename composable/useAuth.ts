@@ -6,8 +6,8 @@ export const useAuth = () => {
     const register = async (credentials: AuthCredentials) => {
         try {
             const { data, error } = await supabase.auth.signUp({
-                email: credentials.email,
-                password: credentials.password,
+                email: credentials.email || '',
+                password: credentials.password || '',
                 options: {
                     emailRedirectTo: `${window.location.origin}/confirm-email`,
                     data: {
@@ -30,8 +30,8 @@ export const useAuth = () => {
     const signInWithPassword = async (credentials: AuthCredentials) => {
         try {
             const { data, error } = await supabase.auth.signInWithPassword({
-                email: credentials.email,
-                password: credentials.password,
+                email: credentials.email || '',
+                password: credentials.password || '',
             });
 
             return { data, error };

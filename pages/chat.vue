@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
   title: "Chat",
   meta: [
@@ -11,15 +11,15 @@ definePageMeta({
   layout: "auth-layout",
 });
 
+import type { User } from "@supabase/supabase-js";
 import { ref, nextTick, watch } from "vue";
 
 const supabase = useSupabaseClient();
-const user = useSupabaseUser();
+const user: Ref<User | null> = useSupabaseUser();
 
-const messages = ref([]);
+const messages = ref<any>([]);
 const newMessage = ref("");
-const messagesContainer = ref(null);
-const scrollTarget = ref(null);
+const messagesContainer = ref<any>(null);
 
 const scrollToBottom = async () => {
   await nextTick();
@@ -34,9 +34,9 @@ const sendMessage = async () => {
     return;
   }
 
-  const id = user?.value.id;
-  const email = user?.value.email;
-  const name = user?.value.user_metadata.name;
+  const id = user?.value?.id;
+  const email = user?.value?.email;
+  const name = user?.value?.user_metadata.name;
 
   await $fetch("/api/chat", {
     method: "POST",
@@ -50,12 +50,6 @@ const sendMessage = async () => {
 
   newMessage.value = "";
 };
-
-// const scrollToBottom = () => {
-//   if (messagesContainer.value) {
-//     messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
-//   }
-// };
 
 watch(
   messages,

@@ -1,5 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from "vue";
+import type { BlogInterface } from "~/types/blog";
 
 definePageMeta({
   title: "My Blogs",
@@ -13,14 +14,14 @@ definePageMeta({
   layout: "auth-layout",
 });
 
-const blogs = ref([]);
+const blogs = ref<BlogInterface[]>([]);
 
 onMounted(async () => {
   const data = await $fetch(`/api/blogs/${useSupabaseUser().value?.id}`, {
     headers: useRequestHeaders(["cookie"]),
   });
 
-  blogs.value = data;
+  blogs.value = data || [];
 });
 </script>
 
