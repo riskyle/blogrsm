@@ -1,11 +1,12 @@
-<script setup>
+<script setup lang="ts">
+import type { BlogInterface } from "~/types/blog";
 import Button from "./ui/button/Button.vue";
 import Input from "./ui/input/Input.vue";
 import Label from "./ui/label/Label.vue";
 
 const props = defineProps({
   fetch: {
-    type: Promise,
+    type: Promise<BlogInterface | undefined>,
     required: false,
   },
   header: {
@@ -21,7 +22,7 @@ const props = defineProps({
 const title = ref("");
 const content = ref("");
 
-const emit = defineEmits(["submit"]);
+const emit = defineEmits(["submit", "cancel"]);
 
 const handleSubmit = () => {
   emit("submit", title.value, content.value);
@@ -33,7 +34,7 @@ const handleCancel = () => {
   content.value = "";
 };
 
-const blogPost = await props.fetch;
+const blogPost: BlogInterface | undefined = await props.fetch;
 
 if (blogPost) {
   title.value = blogPost?.title;

@@ -21,8 +21,8 @@ export const useUserUpdate = () => {
         }
     };
 
-    const updateUserPassword = async (password: string) => {
-        const response = await verifyUserPassword(password);
+    const updateUserPassword = async (password: { currentPassword: string, confirmPassword: string, newPassword: string }) => {
+        const response = await verifyUserPassword(password.currentPassword);
 
         // try {
         //     const { data, error } = await client.auth.updateUser({
@@ -37,6 +37,7 @@ export const useUserUpdate = () => {
         // } catch (error: any) {
         //     console.error("Error updating user password:", error);
         // }
+        return null;
     };
 
     const verifyUserPassword = async (password: string) => {

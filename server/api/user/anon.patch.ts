@@ -1,5 +1,4 @@
 import { serverSupabaseUser, serverSupabaseClient } from "#supabase/server";
-import { Profile } from "~/types/blog";
 
 export default defineEventHandler(async (event) => {
     const user = await serverSupabaseUser(event);

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { toast } from "vue-sonner";
 
 definePageMeta({
@@ -13,7 +13,7 @@ definePageMeta({
   layout: "auth-layout",
 });
 
-const submitPost = async (title, content) => {
+const submitPost = async (title: string, content: string) => {
   if (!title || !content || content.length < 8) {
     toast.error("Title and content cannot be empty.");
     return;
@@ -27,7 +27,7 @@ const submitPost = async (title, content) => {
 
   const id = useSupabaseUser().value?.id;
 
-  const { message, statusCode } = await $fetch("/api/blog", {
+  const { message, statusCode }: any = await $fetch("/api/blog", {
     method: "POST",
     body: {
       title,

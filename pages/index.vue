@@ -1,4 +1,6 @@
-<script setup>
+<script setup lang="ts">
+import type { BlogInterface } from "~/types/blog";
+
 definePageMeta({
   title: "Home",
   meta: [
@@ -10,23 +12,24 @@ definePageMeta({
   middleware: "auth",
 });
 
-const blogs = ref([]);
+const blogs = ref<BlogInterface[]>([]);
 const user = useSupabaseUser();
 
-const deleteBlog = async (slug) => {
+const deleteBlog = async (slug: string) => {
   await $fetch(`/api/blog/${slug}`, {
     method: "DELETE",
     headers: useRequestHeaders(["cookie"]),
   });
 
-  blogs.value = blogs.value.filter((blog) => blog.slug !== slug);
+  blogs.value = blogs.value?.filter(
+    (blog: BlogInterface) => blog.slug !== slug
+  );
 };
 
 onMounted(async () => {
   const headers = useRequestHeaders(["cookie"]);
 
   const data = await $fetch("/api/blogs", { headers });
-
   blogs.value = data || [];
 });
 </script>
