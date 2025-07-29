@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Loader2 } from "lucide-vue-next";
 import type { BlogInterface } from "~/types/blog";
 
 definePageMeta({
@@ -12,8 +13,10 @@ definePageMeta({
   middleware: "auth",
 });
 
-const blogs = ref<BlogInterface[]>([]);
 const user = useSupabaseUser();
+
+const blogs = ref<BlogInterface[]>([]);
+const loading = ref(false);
 
 const deleteBlog = async (slug: string) => {
   await $fetch(`/api/blog/${slug}`, {
@@ -28,18 +31,25 @@ const deleteBlog = async (slug: string) => {
 
 onMounted(async () => {
   const headers = useRequestHeaders(["cookie"]);
-
+  loading.value = true;
   const data = await $fetch("/api/blogs", { headers });
   blogs.value = data || [];
+  loading.value = false;
 });
 </script>
 
 <template>
   <div
+    v-if="!loading"
     :class="{ 'items-center': !!user == false }"
     class="flex flex-col gap-1 mx-8 max-[1050px]:mx-10 min-[501px]:max-[769px]:mx-1 max-[500px]:mx-0 my-2"
   >
-    <div></div>
     <blog-post :blogs="blogs" @deleteBlog="deleteBlog" />
+  </div>
+  <div v-if="loading" class="flex justify-center items-center w-full h-140">
+    <img
+      src="../assets/img/logo.png"
+      class="w-12 h-12 animate-spin rounded-full"
+    />
   </div>
 </template>
