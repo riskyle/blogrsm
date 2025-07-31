@@ -1,6 +1,8 @@
 import type { AuthCredentials } from "~/types/useAuth";
 
 export const useAuth = () => {
+    const { $supabaseAdmin } = useNuxtApp();
+
     const supabase = useSupabaseClient();
 
     const register = async (credentials: AuthCredentials) => {
@@ -113,15 +115,13 @@ export const useAuth = () => {
 
     const deleteSelf = async () => {
         try {
-            // const { error } = await supabase.auth.admin.deleteUser()
-            // if (error) throw error
+            const id: string | undefined = useSupabaseUser().value?.id;
 
-            // Redirect to login or home page
-            await navigateTo('/login')
-            return { success: true }
+            await $supabaseAdmin.auth.admin.deleteUser(id || "");
+            await signOut();
+            navigateTo("/login");
         } catch (error: any) {
-            console.error('Error deleting user:', error)
-            return { success: false, error: error.message }
+            console.log("Error on deleting user", error);
         }
     }
 

@@ -13,7 +13,9 @@ definePageMeta({
   middleware: "auth",
 });
 
+const { $hello } = useNuxtApp();
 const user = useSupabaseUser();
+
 
 const blogs = ref<BlogInterface[]>([]);
 const loading = ref(false);

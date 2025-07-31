@@ -4,7 +4,6 @@ export const useUserUpdate = () => {
     const updateUserInfo = async (userInfo: Record<string, any>) => {
         try {
             const { data, error } = await client.auth.updateUser({
-                email: userInfo.email,
                 data: {
                     name: userInfo.full_name,
                     avatar_url: userInfo.avatar_url,
@@ -22,22 +21,25 @@ export const useUserUpdate = () => {
     };
 
     const updateUserPassword = async (password: { currentPassword: string, confirmPassword: string, newPassword: string }) => {
-        const response = await verifyUserPassword(password.currentPassword);
+        const isVerified = await verifyUserPassword(password.currentPassword);
 
-        // try {
-        //     const { data, error } = await client.auth.updateUser({
-        //         password
-        //     });
+        if (!!isVerified) {
+            try {
+                const { data, error } = await client.auth.updateUser({
+                    password: password.newPassword,
+                });
 
-        //     if (error) {
-        //         throw new Error(`Error updating user password: ${error.message}`)
-        //     }
+                if (error) {
+                    throw new Error(`Error updating user password: ${error.message}`)
+                }
 
-        //     return data
-        // } catch (error: any) {
-        //     console.error("Error updating user password:", error);
-        // }
-        return null;
+                return data
+            } catch (error: any) {
+                console.error("Error updating user password:", error);
+            }
+        } else {
+            return null;
+        }
     };
 
     const verifyUserPassword = async (password: string) => {
@@ -46,9 +48,14 @@ export const useUserUpdate = () => {
                 email: useSupabaseUser().value?.email || '',
                 password
             });
+
+            if (error) {
+                throw error;
+            }
+
+            return data.user
         } catch (error: any) {
             console.error("Error verifying user password:", error);
-            return { error: error.message };
         }
     }
 

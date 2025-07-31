@@ -16,7 +16,6 @@ import { useAuth } from "~/composable/useAuth";
 import { toast } from "vue-sonner";
 
 const { signInWithPassword, loginWithGoogle, loginWithFacebook } = useAuth();
-const user = useSupabaseUser();
 
 const loading = ref(false);
 
