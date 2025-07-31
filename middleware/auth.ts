@@ -17,6 +17,10 @@ export default defineNuxtRouteMiddleware((to, from) => {
         return;
     }
 
+    if (isPublicPage && isAuthenticated) {
+        return navigateTo('/');
+    }
+
     if (!isPublicPage && !isAuthenticated) {
         return navigateTo('/login');
     }
