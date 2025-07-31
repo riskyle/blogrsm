@@ -1,4 +1,25 @@
 <script setup lang="ts">
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { ref } from "vue";
+import { useUserUpdate } from "~/composable/useUserUpdate";
+import { useAuth } from "~/composable/useAuth";
+import defaultImg from "~/assets/img/default.jpg";
+import { toast } from "vue-sonner";
+import Label from "~/components/ui/label/Label.vue";
+import Input from "~/components/ui/input/Input.vue";
+import Button from "~/components/ui/button/Button.vue";
+import type { User } from "@supabase/supabase-js";
+
 definePageMeta({
   title: "User Profile",
   meta: [
@@ -10,15 +31,6 @@ definePageMeta({
   middleware: "auth",
   layout: "auth-layout",
 });
-import { ref, onMounted } from "vue";
-import { useUserUpdate } from "~/composable/useUserUpdate";
-import { useAuth } from "~/composable/useAuth";
-import defaultImg from "~/assets/img/default.jpg";
-import { toast } from "vue-sonner";
-import Label from "~/components/ui/label/Label.vue";
-import Input from "~/components/ui/input/Input.vue";
-import Button from "~/components/ui/button/Button.vue";
-import type { User } from "@supabase/supabase-js";
 
 const { updateUserInfo, updateUserPassword } = useUserUpdate();
 const { deleteSelf, getLoginMethod } = useAuth();
@@ -28,6 +40,8 @@ const user: Ref<User | null> = useSupabaseUser();
 const name = ref(user.value?.user_metadata.name || "");
 const avatar = ref(user.value?.user_metadata.avatar_url || defaultImg);
 const email = ref(user.value?.email || "");
+const isOpen = ref(false);
+const count = ref(3);
 const method = ref(getLoginMethod());
 
 const currentPassword = ref<string>("");
@@ -43,16 +57,41 @@ const updateInfo = async () => {
   toast.success("Profile updated successfully!");
 };
 
-const deleteAccount = async () => {
-  await deleteSelf();
+const deleteAccount = () => {
+  isOpen.value = true;
+
+  const interval = setInterval(async () => {
+    count.value -= 1;
+    if (count.value <= 0) {
+      clearInterval(interval);
+      isOpen.value = false;
+      await deleteSelf();
+    }
+  }, 1000);
 };
 
 const changePassword = async () => {
-  await updateUserPassword({
+  if (!(!!currentPassword && !!newPassword && !!confirmPassword)) {
+    toast.error("Empty fields!");
+    return;
+  }
+
+  if (confirmPassword.value !== newPassword.value) {
+    toast.error("Password is not match");
+    return;
+  }
+
+  const response = await updateUserPassword({
     currentPassword: currentPassword.value,
     newPassword: newPassword.value,
     confirmPassword: confirmPassword.value,
   });
+
+  if (!response) {
+    toast.error("Invalid current password.");
+  } else {
+    toast.success("Successfully change password");
+  }
 };
 </script>
 
@@ -116,8 +155,18 @@ const changePassword = async () => {
         </div>
       </card-header>
       <card-content>
-        <form @submit.prevent="">
+        <form @submit.prevent="changePassword">
           <div class="flex flex-col gap-5">
+            <div class="flex flex-col gap-2">
+              <Label for="">Current Password</Label>
+              <Input
+                class="w-2/4 max-md:w-full"
+                type="password"
+                name="current-password"
+                id="current-password"
+                v-model="currentPassword"
+              />
+            </div>
             <div class="flex flex-col gap-2">
               <Label for="">New Password</Label>
               <Input
@@ -139,7 +188,14 @@ const changePassword = async () => {
               />
             </div>
             <div>
-              <Button class="cursor-pointer" type="submit">Save</Button>
+              <Button
+                class="cursor-pointer"
+                type="submit"
+                :disabled="
+                  !(!!currentPassword && !!newPassword && !!confirmPassword)
+                "
+                >Save</Button
+              >
             </div>
           </div>
         </form>
@@ -158,11 +214,49 @@ const changePassword = async () => {
       </card-header>
       <card-content>
         <div>
-          <Button class="cursor-pointer" type="submit" variant="destructive"
-            >Delete</Button
-          >
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <Button
+                class="cursor-pointer"
+                type="button"
+                variant="destructive"
+              >
+                Delete
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel class="cursor-pointer"
+                  >Cancel</AlertDialogCancel
+                >
+                <AlertDialogAction @click="deleteAccount" class="cursor-pointer"
+                  >Yes, I wanted to delete it</AlertDialogAction
+                >
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </card-content>
     </card>
   </div>
+
+  <AlertDialog :open="isOpen">
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle
+          >You are gonna redirect in {{ count }}.</AlertDialogTitle
+        >
+        <AlertDialogDescription>
+          Thank you for everything, bye!
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+    </AlertDialogContent>
+  </AlertDialog>
 </template>

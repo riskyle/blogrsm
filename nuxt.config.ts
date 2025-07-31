@@ -16,7 +16,12 @@ export default defineNuxtConfig({
       exclude: ['/register', '/registered', '/login', '/confirm-email', '/', '/blog/**'],
     },
     url: process.env.SUPABASE_URL,
-    key: process.env.SUPABASE_ANON_KEY,
+    key: process.env.SUPABASE_ANON_KEY
+  },
+  runtimeConfig: {
+    public: {
+      serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    }
   },
   ssr: true,
   colorMode: {
