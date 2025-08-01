@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Loader2 } from "lucide-vue-next";
 import type { BlogInterface } from "~/types/blog";
 
 definePageMeta({
@@ -13,9 +12,7 @@ definePageMeta({
   middleware: "auth",
 });
 
-const { $hello } = useNuxtApp();
 const user = useSupabaseUser();
-
 
 const blogs = ref<BlogInterface[]>([]);
 const loading = ref(false);
