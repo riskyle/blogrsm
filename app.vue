@@ -10,7 +10,7 @@ useHead({
   },
 });
 
-const title = "BloChat- A Blog Application with Chat Features";
+const title = "Bloch- A Blog Application with Chat Features";
 const description = "A blog application that with chat features.";
 useSeoMeta({
   title,

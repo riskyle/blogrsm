@@ -10,17 +10,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Separator from "./ui/separator/Separator.vue";
-import { Ellipsis, MessageCircle } from "lucide-vue-next";
+import { Ellipsis } from "lucide-vue-next";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import type { BlogInterface } from "~/types/blog";
@@ -105,8 +102,7 @@ const stripHtml = (html: string) => {
                       >
                       <AlertDialogDescription>
                         This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
+                        delete your blog.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

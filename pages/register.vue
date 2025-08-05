@@ -84,7 +84,7 @@ const signInWithFacebook = () => {
   >
     <div class="flex w-full max-w-sm flex-col gap-6">
       <nuxt-link to="/" class="flex items-center flex-col gap-6">
-        <h1 class="text-2xl font-bold">Blochatod</h1>
+        <h1 class="text-2xl font-bold">Bloch</h1>
       </nuxt-link>
       <register-form
         @sign-in-with-facebook="signInWithFacebook"

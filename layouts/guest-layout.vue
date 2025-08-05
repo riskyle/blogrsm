@@ -8,7 +8,7 @@ import Button from "~/components/ui/button/Button.vue";
     class="sticky top-0 z-10 bg-gray-100 px-5 border-b border-gray-300 dark:bg-gray-800 flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16"
   >
     <div class="flex flex-row items-center">
-      <p class="text-2xl uppercase font-bold max-md:hidden">Blochat</p>
+      <p class="text-2xl uppercase font-bold max-md:hidden">Bloch</p>
     </div>
 
     <div class="flex gap-3 items-center">

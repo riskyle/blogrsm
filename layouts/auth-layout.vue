@@ -27,7 +27,7 @@ import {
           <p
             class="text-2xl uppercase font-bold max-[426px]:text-xl min-[1050px]:ml-4"
           >
-            Blochat
+            Bloch
           </p>
         </div>
         <div class="pr-4">
