@@ -1,4 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
+import tailwindTypography from "@tailwindcss/typography";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
@@ -45,6 +47,11 @@ export default defineNuxtConfig({
      * @default "./components/ui"
      */
     componentDir: './components/ui'
+  },
+  tailwindcss: {
+    config: {
+      plugins: [tailwindTypography],
+    }
   },
   css: ['~/assets/css/tailwind.css'],
   vite: {
